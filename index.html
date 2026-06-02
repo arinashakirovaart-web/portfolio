@@ -467,7 +467,23 @@ const caseData={
     {src:'Ux-ui%20design/IQOS_2023.png',w:198,h:1443,name:'IQOS_2023'},
   ]},
 
-  kv:{label:'KEY VISUALS',imgs:['work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png']},
+  kv:{label:'KEY VISUALS',windows:[
+    {src:'Key%20Visuals/Dequine_2025.png',w:505,h:719,name:'Dequine_2025'},
+    {src:'Key%20Visuals/Lipton_2026.png',w:500,h:719,name:'Lipton_2026'},
+    {src:'Key%20Visuals/Eden_2025.png',w:500,h:889,name:'Eden_2025'},
+    {src:'Key%20Visuals/Finish_2024.png',w:402,h:578,name:'Finish_2024'},
+    {src:'Key%20Visuals/RedBull_2026.png',w:396,h:569,name:'RedBull_2026'},
+    {src:'Key%20Visuals/RedBull_2025.png',w:455,h:569,name:'RedBull_2025'},
+    {src:'Key%20Visuals/IQOS_2026.png',w:648,h:357,name:'IQOS_2026'},
+    {src:'Key%20Visuals/IQOS_2024.png',w:698,h:339,name:'IQOS_2024'},
+    {src:'Key%20Visuals/IQOS_2023.png',w:698,h:360,name:'IQOS_2023'},
+    {src:'Key%20Visuals/Kinder_2024.png',w:500,h:354,name:'Kinder_2024'},
+    {src:'Key%20Visuals/Domestos_2026.png',w:505,h:719,name:'Domestos_2026'},
+    {src:'Key%20Visuals/FlashUp_2025.png',w:500,h:719,name:'FlashUp_2025'},
+    {src:'Key%20Visuals/GSM_2026.png',w:678,h:480,name:'GSM_2026'},
+    {src:'Key%20Visuals/Magnum_2024.png',w:590,h:339,name:'Magnum_2024'},
+    {src:'Key%20Visuals/Lipton_2025.png',w:500,h:719,name:'Lipton_2025'},
+  ]},
   smm:{label:'SMM DESIGN',imgs:['work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg']},
   video:{label:'VIDEO CASES',imgs:['work/video%20cases.png','work/video%20cases.png']},
   photo:{label:'PHOTO & VIDEO',imgs:['work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png']},
@@ -494,19 +510,25 @@ function openCase(id){
   wrap.innerHTML='';gz=20;
   const W=window.innerWidth,H=window.innerHeight;
   const items=cfg.windows||cfg.imgs.map((src,i)=>({src,w:699,h:490,name:(names[id]||[])[i]||'work_0'+(i+1)}));
-  const isScrollable=cfg.windows&&cfg.windows.some(function(w){return w.h>700});
+  const isScrollable=cfg.windows&&cfg.windows.length>4;
   const caseEl=document.getElementById('case');
   caseEl.style.overflowY=isScrollable?'auto':'hidden';
-  // Calculate total needed height for scrollable pages
-  const totalH=isScrollable?cfg.windows.reduce(function(a,w){return Math.max(a,w.h)},0)+600:H;
+  // Chaotic overlap like in Figma - windows scatter naturally, overlapping
+  const maxW=Math.max(...items.map(function(w){return w.w}));
+  const totalPageH=isScrollable?Math.max(...items.map(function(w,i){return 90+Math.floor(i/2)*350+w.h+100})):H;
   items.forEach((item,i)=>{
     const win=document.createElement('div');
     win.className='mw';
     const w=item.w;
     const h=item.h;
-    const x=40+Math.random()*(W-w-60);
-    const y=90+Math.random()*(totalH-h-60);
-    const r=(Math.random()-.5)*12;
+    // Place in rough rows of 2, with random offsets for chaos
+    const col=i%2;
+    const row=Math.floor(i/2);
+    const baseX=col===0?40+Math.random()*200:W/2-100+Math.random()*200;
+    const baseY=90+row*320+Math.random()*120;
+    const x=Math.max(20,Math.min(W-w-20,baseX));
+    const y=Math.max(90,baseY);
+    const r=(Math.random()-.5)*14;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
     win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;height:${h}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:${h}px;object-fit:cover;display:block;pointer-events:none"></div>`;
     drag(win);
