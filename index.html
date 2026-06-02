@@ -494,16 +494,21 @@ function openCase(id){
   wrap.innerHTML='';gz=20;
   const W=window.innerWidth,H=window.innerHeight;
   const items=cfg.windows||cfg.imgs.map((src,i)=>({src,w:699,h:490,name:(names[id]||[])[i]||'work_0'+(i+1)}));
+  const isScrollable=cfg.windows&&cfg.windows.some(function(w){return w.h>700});
+  const caseEl=document.getElementById('case');
+  caseEl.style.overflowY=isScrollable?'auto':'hidden';
+  // Calculate total needed height for scrollable pages
+  const totalH=isScrollable?cfg.windows.reduce(function(a,w){return Math.max(a,w.h)},0)+600:H;
   items.forEach((item,i)=>{
     const win=document.createElement('div');
     win.className='mw';
     const w=item.w;
-    const maxH=Math.min(item.h,600);
+    const h=item.h;
     const x=40+Math.random()*(W-w-60);
-    const y=90+Math.random()*(H-200);
+    const y=90+Math.random()*(totalH-h-60);
     const r=(Math.random()-.5)*12;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
-    win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;max-height:${maxH}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:auto;display:block;pointer-events:none"></div>`;
+    win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;height:${h}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:${h}px;object-fit:cover;display:block;pointer-events:none"></div>`;
     drag(win);
     wrap.appendChild(win);
   });
