@@ -537,22 +537,22 @@ function openCase(id){
   const isScrollable=cfg.windows&&cfg.windows.length>4;
   const caseEl=document.getElementById('case');
   caseEl.style.overflowY=isScrollable?'auto':'hidden';
-  // Chaotic overlap like in Figma - windows scatter naturally, overlapping
-  const maxW=Math.max(...items.map(function(w){return w.w}));
-  const totalPageH=isScrollable?Math.max(...items.map(function(w,i){return 90+Math.floor(i/2)*350+w.h+100})):H;
+  const n=items.length;
+  // Dense chaotic pile — like Figma reference
+  // All windows scattered in one big zone, heavily overlapping
+  // For many items, zone grows a bit vertically but stays compact
+  const pileW=W-80;
+  const pileH=n<=6?600:n<=12?900:1200;
+  const pileTop=90;
   items.forEach((item,i)=>{
     const win=document.createElement('div');
     win.className='mw';
     const w=item.w;
     const h=item.h;
-    // Place in rough rows of 2, with random offsets for chaos
-    const col=i%2;
-    const row=Math.floor(i/2);
-    const baseX=col===0?40+Math.random()*200:W/2-100+Math.random()*200;
-    const baseY=90+row*320+Math.random()*120;
-    const x=Math.max(20,Math.min(W-w-20,baseX));
-    const y=Math.max(90,baseY);
-    const r=(Math.random()-.5)*14;
+    // Scatter randomly across the pile zone
+    const x=Math.max(20, Math.min(W-w-20, 20+Math.random()*Math.max(pileW-w,10)));
+    const y=pileTop+Math.random()*Math.max(pileH-h*0.5, 50);
+    const r=(Math.random()-.5)*20;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
     win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;height:${h}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:${h}px;object-fit:cover;display:block;pointer-events:none"></div>`;
     drag(win);
