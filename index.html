@@ -70,7 +70,7 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
   padding:18px 18px 74px 18px;
   overflow:hidden;
 }
-.wcard.featured{border-color:var(--pink)}
+.wcard.featured{border-color:#1c1c1c}
 .wcard:hover{border-color:var(--pink)}
 .wcard-top{
   display:flex;
@@ -153,20 +153,89 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 .mw img{display:block;width:100%;height:auto;pointer-events:none}
 
 /* ===== ABOUT ===== */
-#about{background:#000;padding-top:70px}
-.about-grid{display:grid;grid-template-columns:42% 1fr;min-height:calc(100vh - 70px)}
-.aphoto{position:relative;overflow:hidden;background:#111}
-.aphoto img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-.aphoto-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.25);white-space:nowrap;z-index:3;transition:color .3s}
-.aphoto:hover .aphoto-hint{color:var(--pink)}
-.acanvas{position:absolute;inset:0;pointer-events:none;z-index:2}
-.atext{padding:60px 56px;display:flex;flex-direction:column;justify-content:center}
-.aeyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);margin-bottom:16px}
-.ah1{font-size:clamp(28px,4vw,48px);font-weight:400;letter-spacing:-.02em;margin-bottom:28px;line-height:.95}
-.abody p{font-size:14px;line-height:1.8;color:#777;margin-bottom:16px}
-.abody .pink{color:var(--pink)}
-.abody strong{color:#fff;font-weight:500}
-.acta{margin-top:24px;display:inline-block;background:none;border:1px solid var(--pink);color:var(--pink);font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:48px;cursor:none;transition:all .3s}
+#about{background:#000;padding-top:70px;overflow-y:auto}
+.about-inner{min-height:calc(100vh - 70px)}
+
+/* Hero: фото + заголовок */
+.about-hero{
+  position:relative;
+  height:400px;
+  overflow:hidden;
+}
+.aphoto{
+  position:absolute;
+  left:0;top:0;
+  width:720px;
+  height:100%;
+  overflow:hidden;
+}
+.aphoto img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:top center;
+  display:block;
+  filter:grayscale(100%);
+}
+.acanvas{display:none}
+.ameta{
+  position:absolute;
+  left:18px;top:50%;
+  transform:translateY(-50%);
+  font-size:19px;color:#fff;
+  line-height:1.3;z-index:2;
+}
+.ah1{
+  position:absolute;
+  left:143px;top:12px;
+  width:calc(100% - 180px);
+  font-size:clamp(40px,5.5vw,82px);
+  font-weight:400;line-height:1.01;
+  color:#fff;z-index:2;
+}
+
+/* Body: текст + фото в полный рост + мелкий текст */
+.about-body{
+  display:grid;
+  grid-template-columns:1fr 350px;
+  gap:0;
+  padding:80px 60px 80px 173px;
+  align-items:start;
+}
+.abody-main{
+  display:flex;flex-direction:column;
+  gap:48px;padding-right:60px;
+}
+.abody-main p{
+  font-size:clamp(24px,3vw,42px);
+  font-weight:400;line-height:1.16;color:#fff;
+}
+.abody-main .pink{color:var(--pink)}
+.abody-right{
+  display:flex;flex-direction:column;
+  gap:0;
+}
+.abody-photo{
+  width:100%;
+  margin-bottom:24px;
+}
+.abody-photo img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+.abody-side p{
+  font-size:23px;font-weight:400;
+  line-height:26px;color:#fff;
+  margin-bottom:16px;
+}
+.acta{
+  margin-top:24px;display:inline-block;
+  background:none;border:1px solid var(--pink);
+  color:var(--pink);font-family:'Inter',sans-serif;
+  font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;padding:12px 28px;
+  border-radius:48px;cursor:none;transition:all .3s;
+}
 .acta:hover{background:var(--pink);color:#000}
 
 /* ===== CONTACTS ===== */
@@ -298,23 +367,31 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 
 <!-- ABOUT -->
 <div id="about" class="page">
-  <div class="about-grid">
-    <div class="aphoto" id="aphoto">
-      <img src="IMG_7135.jpg" alt="Arisha" id="aimg">
-      <canvas class="acanvas" id="acanvas"></canvas>
-      <div class="aphoto-hint">don't touch my face</div>
-    </div>
-    <div class="atext">
-      <div class="aeyebrow">About</div>
-      <h1 class="ah1">Hey, I'm Arisha! Hiking in summer, skiing in winter — I'm a woman of many hobbies.</h1>
-      <div class="abody">
-        <p>I moved from Russia to Kazakhstan at 19 when the war started. <strong>Best decision I ever made</strong>, even if the first year was a lot.</p>
-        <p><span class="pink">I joke in 3 languages and can stand on 1 head.</span> I've been to 25 countries and I'm always planning the next one. At 20 I went to <span class="pink">Cannes Lions as a competitor</span> — and in June 2026 I'm going back for my first gold&nbsp;;)</p>
-        <p>I do yoga every day, drink Chinese tea, and read Russian classics. I'm also studying philology at uni because apparently <strong>one passion is never enough.</strong></p>
-        <p>I believe in good teamwork, planning, and work-life balance that's actually balanced. I've never burned out — not because I work less, but because I rest properly.</p>
-        <p>Whether it's a big campaign, a weird idea, or just a coffee chat about design — I'm in.</p>
+  <div class="about-inner">
+    <div class="about-hero">
+      <div class="aphoto" id="aphoto">
+        <img src="about/home-quote-desktop.jpg.png" alt="Arisha" id="aimg">
+        <canvas class="acanvas" id="acanvas"></canvas>
       </div>
-      <button class="acta" onclick="go('contacts')">Let's connect ↓</button>
+      <div class="ameta">Arisha<br>Shakirova,<br>22 y.o.</div>
+      <h1 class="ah1">Hey, I'm Arisha! Hiking in summer, skiing in winter — I'm a woman of many hobbies.</h1>
+    </div>
+    <div class="about-body">
+      <div class="abody-main">
+        <p>I moved from Russia to Kazakhstan at 19 when the war started. Best decision I ever made, even if the first year was a lot.</p>
+        <p><span class="pink">I joke in 3 languages and can stand on 1 head.</span> I've been to 25 countries and I'm always planning the next one. At 20 I went to <span class="pink">Cannes Lions as a competitor</span> — and in June 2026 I'm going back for my first gold ;)</p>
+        <p>Whether it's a big campaign, a weird idea, or just a coffee chat about design — <span class="pink">I'm in. Let's connect.</span></p>
+        <button class="acta" onclick="go('contacts')">Let's connect ↓</button>
+      </div>
+      <div class="abody-right">
+        <div class="abody-photo">
+          <img src="about/IMG_7372.png" alt="Arisha">
+        </div>
+        <div class="abody-side">
+          <p>I do yoga every day, drink Chinese tea, and read Russian classics. I'm also studying philology at uni because apparently one passion is never enough.</p>
+          <p>I believe in good teamwork, planning, and work-life balance that's actually balanced. I've never burned out — not because I work less, but because I rest properly.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -426,28 +503,7 @@ function drag(el){
   document.addEventListener('mouseup',()=>d=false);
 }
 
-// ABOUT face doodle
-const ap=document.getElementById('aphoto');
-const ac=document.getElementById('acanvas');
-const ax=ac.getContext('2d');
-let dt=null,sp=false,ro=0;
-function rsz(){ac.width=ap.offsetWidth;ac.height=ap.offsetHeight}
-ap.addEventListener('mouseenter',()=>{rsz();ax.clearRect(0,0,ac.width,ac.height);dt=setInterval(ddl,55);sp=true;spn();});
-ap.addEventListener('mouseleave',()=>{clearInterval(dt);ax.clearRect(0,0,ac.width,ac.height);sp=false;document.getElementById('aimg').style.transform='';});
-function ddl(){
-  ax.strokeStyle='#FE2E9D';ax.lineWidth=1+Math.random()*2;ax.lineCap='round';ax.globalAlpha=.4+Math.random()*.5;
-  ax.beginPath();
-  const x=Math.random()*ac.width,y=ac.height*.1+Math.random()*ac.height*.75;
-  ax.moveTo(x,y);
-  for(let i=0;i<3;i++)ax.lineTo(x+(Math.random()-.5)*70,y+(Math.random()-.5)*70);
-  ax.stroke();
-  if(Math.random()>.65){ax.font='13px serif';ax.fillStyle='#FE2E9D';ax.globalAlpha=.7;ax.fillText('♥',Math.random()*ac.width,Math.random()*ac.height*.85);}
-}
-function spn(){
-  if(!sp)return;ro+=1.5;
-  document.getElementById('aimg').style.transform=`rotate(${Math.sin(ro*.04)*7}deg) scale(${1+Math.sin(ro*.07)*.015})`;
-  requestAnimationFrame(spn);
-}
+
 </script>
 </body>
 </html>
