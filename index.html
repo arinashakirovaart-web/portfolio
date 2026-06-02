@@ -33,17 +33,23 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 
 /* ===== HOME ===== */
 #home{background:#000;padding-top:70px}
-.home-body{flex:1;padding:60px 60px 0;display:flex;gap:0;position:relative}
-.home-left{flex:1}
-.hero-title{font-size:clamp(48px,7.5vw,108px);font-weight:400;line-height:1.02;letter-spacing:-.02em;color:var(--pink);margin-bottom:32px}
+.home-body{flex:1;padding:60px 60px 0;display:flex;gap:0;position:relative;min-height:0}
+.home-left{flex:1;display:flex;flex-direction:column}
+.hero-title{font-size:clamp(48px,7.5vw,108px);font-weight:400;line-height:1.02;letter-spacing:-.02em;color:var(--pink);margin-bottom:0}
 .hero-line{display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap}
-.hero-gif{width:130px;height:131px;border-radius:50%;overflow:hidden;display:inline-flex;flex-shrink:0;margin:0 10px;vertical-align:middle}
+.hero-gif{width:130px;height:131px;border-radius:0;overflow:hidden;display:inline-flex;flex-shrink:0;margin:0 10px;vertical-align:middle}
 .hero-gif img{width:100%;height:100%;object-fit:cover}
-.hero-right{position:absolute;right:60px;top:0;width:330px}
-.hero-bio{font-size:23px;font-weight:400;line-height:26px;color:#fff}
+.hero-right{
+  position:absolute;
+  right:60px;
+  top:50%;
+  transform:translateY(-50%);
+  width:330px;
+}
+.hero-bio{font-size:23px;font-weight:400;line-height:1.45;color:#fff}
 .hero-bio .pink{color:var(--pink)}
 .hero-bio p{margin-bottom:16px}
-.emoji-block{margin-top:auto;padding-bottom:40px}
+.emoji-block{margin-top:auto;padding-bottom:32px}
 .emoji-label{font-size:16px;color:#fff;line-height:1.8;text-transform:lowercase}
 .emoji-row{font-size:20px;margin-top:2px}
 .ticker-wrap{border-top:1px solid #1a1a1a;overflow:hidden;height:81px;display:flex;align-items:center;margin-top:auto;flex-shrink:0}
@@ -161,10 +167,12 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 #about{background:#000;padding-top:70px;overflow-y:auto}
 .about-inner{
   display:grid;
-  grid-template-columns:698px 40px 1fr;
-  padding:60px 60px 80px 60px;
+  grid-template-columns:min(698px, 48%) 40px 1fr;
+  padding:clamp(40px,4vw,80px) clamp(40px,5vw,80px);
   min-height:calc(100vh - 70px);
   align-items:start;
+  max-width:1600px;
+  margin:0 auto;
 }
 /* LEFT COLUMN */
 .about-left{
@@ -216,15 +224,16 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
   gap:0;
 }
 .about-gif{
-  width:596px;
-  height:964px;
+  width:100%;
+  max-width:596px;
+  aspect-ratio:596/964;
   overflow:hidden;
   line-height:0;
   margin-bottom:32px;
 }
 .about-gif img{
-  width:596px;
-  height:964px;
+  width:100%;
+  height:100%;
   object-fit:cover;
   display:block;
 }
@@ -344,7 +353,7 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 <body>
 
 <div id="mobile-stub">
-  <img src="about.gif" style="width:180px;height:180px;object-fit:cover;border-radius:50%;margin-bottom:24px">
+  <img src="ava%20copy.gif" style="width:200px;height:200px;object-fit:cover;margin-bottom:24px;display:block">
   <h2>This portfolio is designed<br>for desktop</h2>
   <p>Open on your laptop<br>for the full experience ♥</p>
 </div>
