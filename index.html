@@ -212,29 +212,37 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 .abody-main .pink{color:var(--pink)}
 .abody-right{
   display:flex;flex-direction:column;
+  align-items:flex-start;
   gap:0;
+  padding-top:0;
 }
 .abody-photo{
   width:100%;
   margin-bottom:24px;
+  line-height:0;
 }
 .abody-photo img{
   width:100%;
   display:block;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:top center;
+  max-height:400px;
 }
+.abody-side{margin-top:0}
 .abody-side p{
   font-size:23px;font-weight:400;
   line-height:26px;color:#fff;
   margin-bottom:16px;
 }
 .acta{
-  margin-top:24px;display:inline-block;
+  align-self:flex-start;
+  display:inline-block;
   background:none;border:1px solid var(--pink);
   color:var(--pink);font-family:'Inter',sans-serif;
   font-size:10px;letter-spacing:.1em;
   text-transform:uppercase;padding:12px 28px;
   border-radius:48px;cursor:none;transition:all .3s;
+  width:auto;
 }
 .acta:hover{background:var(--pink);color:#000}
 
