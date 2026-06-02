@@ -22,10 +22,11 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 /* PAGES */
 .page{display:none}
 .page.on{display:block}
+#home.on{display:flex}
 #contacts.on{display:flex}
 
 /* ===== HOME ===== */
-#home{background:var(--black);height:100vh;max-height:100vh;display:flex;flex-direction:column;padding-top:70px;overflow:hidden}
+#home{background:var(--black);height:100vh;max-height:100vh;flex-direction:column;padding-top:70px;overflow:hidden}
 .home-body{flex:1;padding:0 60px;display:flex;flex-direction:column;justify-content:center;padding-top:60px;padding-bottom:0}
 
 .hero-title{font-size:clamp(48px,7.8vw,112px);font-weight:400;line-height:1.02;letter-spacing:-.02em;color:var(--pink);margin-bottom:32px;display:flex;align-items:center;flex-wrap:wrap;gap:12px}
@@ -173,62 +174,85 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 
 <!-- WORK -->
 <div id="work" class="page">
-  <div class="work-title">Selected <em>Work</em></div>
   <div class="work-grid">
-    <div class="wcard" onclick="openCase('bigideas')">
-      <div class="wcard-img"><img src="images/board-case.jpg" alt="Big Ideas"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">Big Ideas</div><div class="title">Concept Thinking</div><div class="clients">EFES, Kotex, Liquid Death etc.</div></div>
-        <div class="wcard-arrow">↗</div>
+    <div class="wcard wcard-first" onclick="openCase('bigideas')">
+      <div class="wcard-header">
+        <span class="wcat wcat-pink">Big Ideas</span>
+        <span class="wclients">EFES, Kotex, Liquid Death etc.</span>
+      </div>
+      <div class="wcard-img">
+        <img src="Big Ideas/board-case.jpg" alt="Big Ideas">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('uxui')">
-      <div class="wcard-img"><img src="images/Ux-ui_design.png" alt="UX UI"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">UX/UI Design</div><div class="title">Digital Products</div><div class="clients">Kinder, IQOS, Kotex etc.</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Ux-ui design</span>
+        <span class="wclients">Kinder, IQOS, Kotex etc.</span>
+      </div>
+      <div class="wcard-img">
+        <img src="Ux-ui design/ux-ui.png" alt="Ux-ui design">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('kv')">
-      <div class="wcard-img"><img src="images/Key_Visuals.png" alt="Key Visuals"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">Key Visuals</div><div class="title">Campaign Visuals</div><div class="clients">Lipton, IQOS, RedBull etc.</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Key Visuals</span>
+        <span class="wclients">Lipton, IQOS, RedBull etc.</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/Key_Visuals.png" alt="Key Visuals">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('smm')">
-      <div class="wcard-img"><img src="images/SMM_design_.png" alt="SMM"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">SMM Design</div><div class="title">Social Media</div><div class="clients">Kotex, Kinder, Umschool</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">SMM design</span>
+        <span class="wclients">Kotex, Kinder, Umschool</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/SMM_design_.png" alt="SMM design">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('video')">
-      <div class="wcard-img"><img src="images/Video_cases.png" alt="Video"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">Video Cases</div><div class="title">Campaign Reels</div><div class="clients">Kotex, Huggies</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Video cases</span>
+        <span class="wclients">Kotex, Huggies</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/Video_cases.png" alt="Video cases">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('photo')">
-      <div class="wcard-img"><img src="images/Photo_Video_shootings.png" alt="Photo"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">Photo & Video Shootings</div><div class="title">Production Direction</div><div class="clients">Kinder, Kotex</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Photo&Video shootings</span>
+        <span class="wclients">Kinder, Kotex</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/Photo_Video_shootings.png" alt="Photo&Video shootings">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('merch')">
-      <div class="wcard-img"><img src="images/Merch.png" alt="Merch"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">Merch</div><div class="title">Physical Goods</div><div class="clients">Nutella, IQOS, Lipton и др</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Merch</span>
+        <span class="wclients">Nutella, IQOS, Lipton и др</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/Merch.png" alt="Merch">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
     <div class="wcard" onclick="openCase('ai')">
-      <div class="wcard-img"><img src="images/Ai_using.png" alt="AI"></div>
-      <div class="wcard-info">
-        <div class="wcard-text"><div class="cat">AI Using</div><div class="title">AI-generated Work</div><div class="clients">GSM, IQOS, Kinder etc.</div></div>
-        <div class="wcard-arrow">↗</div>
+      <div class="wcard-header">
+        <span class="wcat">Ai using</span>
+        <span class="wclients">GSM, IQOS, Kinder etc.</span>
+      </div>
+      <div class="wcard-img">
+        <img src="images/Ai_using.png" alt="Ai using">
+        <div class="wcard-btn"><svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M12.5 7.36L5.78 14.08L4.67 12.97L11.4 6.25H5.47V4.69H14.07V13.28H12.5V7.36Z" fill="white"/></svg></div>
       </div>
     </div>
   </div>
@@ -320,11 +344,11 @@ const cases={
   bigideas:{label:'BIG IDEAS',imgs:['images/Digital-KZ07-02_copy.jpg','images/board-case.jpg','images/telegram-cloud-photo-size-2-5391282369052398663-y.jpg','images/Print-KZ05-01.jpg','images/board-case.jpg','images/Digital-KZ07-02_copy.jpg']},
   uxui:{label:'UX/UI DESIGN',imgs:['images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png']},
   kv:{label:'KEY VISUALS',imgs:['images/dequine2.jpg','images/lipton_02.jpg','images/kv_copy.png','images/kv_copy.png','images/dequine2.jpg','images/lipton_02.jpg','images/kv_copy.png','images/kv_copy.png']},
-  smm:{label:'SMM DESIGN',imgs:['images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png']},
-  video:{label:'VIDEO CASES',imgs:['images/Video_cases.png','images/Video_cases.png']},
-  photo:{label:'PHOTO & VIDEO SHOOTINGS',imgs:['images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png']},
-  merch:{label:'MERCH',imgs:['images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png']},
-  ai:{label:'AI USING',imgs:['images/Ai_using.png','images/Ai_using.png','images/Ai_using.png','images/Ai_using.png']}
+  smm:{label:'SMM DESIGN',imgs:['work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg']},
+  video:{label:'VIDEO CASES',imgs:['work/video%20cases.png','work/video%20cases.png']},
+  photo:{label:'PHOTO & VIDEO SHOOTINGS',imgs:['work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png','work/photo%26video%20shooting.png']},
+  merch:{label:'MERCH',imgs:['work/merch.jpg','work/merch.jpg','work/merch.jpg','work/merch.jpg','work/merch.jpg','work/merch.jpg']},
+  ai:{label:'AI USING',imgs:['work/ai.jpg','work/ai.jpg','work/ai.jpg','work/ai.jpg']}
 };
 
 let gz=20;
