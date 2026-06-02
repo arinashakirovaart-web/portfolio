@@ -159,22 +159,102 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 
 /* ===== ABOUT ===== */
 #about{background:#000;padding-top:70px;overflow-y:auto}
-.about-inner{min-height:calc(100vh - 70px)}
-.about-top{display:grid;grid-template-columns:1fr 430px;gap:0;padding:40px 60px 0 60px;align-items:start}
-.ah1{font-size:clamp(48px,6.5vw,90px);font-weight:400;line-height:1.05;color:#fff;padding-right:40px}
-.about-gif{width:430px;line-height:0}
-.about-gif img{width:100%;display:block;border-radius:4px}
-.about-bottom{display:grid;grid-template-columns:1fr 280px;gap:0;padding:60px 60px 80px 60px;align-items:start}
-.abody-main{display:flex;flex-direction:column;gap:40px;padding-right:60px}
-.abody-main p{font-size:clamp(28px,3.5vw,42px);font-weight:400;line-height:1.2;color:#fff}
+.about-inner{
+  display:grid;
+  grid-template-columns:698px 40px 1fr;
+  padding:60px 60px 80px 60px;
+  min-height:calc(100vh - 70px);
+  align-items:start;
+}
+/* LEFT COLUMN */
+.about-left{
+  display:flex;
+  flex-direction:column;
+  gap:60px;
+}
+.ah1{
+  font-size:clamp(44px,5.5vw,74px);
+  font-weight:400;
+  line-height:1.05;
+  color:#fff;
+  width:698px;
+  height:413px;
+  display:flex;
+  align-items:flex-start;
+}
+.abody-main{
+  display:flex;
+  flex-direction:column;
+  gap:40px;
+  width:698px;
+}
+.abody-main p{
+  font-size:clamp(26px,2.8vw,42px);
+  font-weight:400;
+  line-height:1.2;
+  color:#fff;
+}
 .abody-main .pink{color:var(--pink)}
-.abody-right{display:flex;flex-direction:column;gap:24px;padding-top:8px}
-.abody-side p{font-size:16px;font-weight:400;line-height:1.6;color:#fff;margin-bottom:12px}
-.ameta{font-size:16px;color:var(--pink);font-weight:400;line-height:1.4;text-align:right}
+.acta{
+  display:inline-block;
+  background:none;border:1px solid var(--pink);
+  color:var(--pink);font-family:'Inter',sans-serif;
+  font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;padding:12px 28px;
+  border-radius:48px;cursor:none;transition:all .3s;
+  width:auto;align-self:flex-start;
+}
+.acta:hover{background:var(--pink);color:#000}
+
+/* GAP COLUMN */
+.about-gap{width:40px}
+
+/* RIGHT COLUMN */
+.about-right{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.about-gif{
+  width:596px;
+  height:964px;
+  overflow:hidden;
+  line-height:0;
+  margin-bottom:32px;
+}
+.about-gif img{
+  width:596px;
+  height:964px;
+  object-fit:cover;
+  display:block;
+}
+.about-right-bottom{
+  display:flex;
+  flex-direction:row;
+  gap:0;
+  align-items:flex-start;
+}
+.abody-side{
+  width:329px;
+  margin-right:20px;
+}
+.abody-side p{
+  font-size:16px;
+  font-weight:400;
+  line-height:1.6;
+  color:#fff;
+  margin-bottom:14px;
+}
+.ameta{
+  width:128px;
+  font-size:16px;
+  color:var(--pink);
+  font-weight:400;
+  line-height:1.4;
+  text-align:right;
+}
 .acanvas{display:none}
 .aphoto{display:none}
-.acta{display:inline-block;background:none;border:1px solid var(--pink);color:var(--pink);font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:48px;cursor:none;transition:all .3s;width:auto;align-self:flex-start}
-.acta:hover{background:var(--pink);color:#000}
 
 /* ===== CONTACTS ===== */
 #contacts{background:#000;padding:80px 60px 60px;flex-direction:column;justify-content:center}
@@ -306,20 +386,24 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 <!-- ABOUT -->
 <div id="about" class="page">
   <div class="about-inner">
-    <div class="about-top">
+    <!-- LEFT COLUMN -->
+    <div class="about-left">
       <h1 class="ah1">Hey, I'm Arisha! Hiking in summer, skiing in winter — I'm a woman of many hobbies.</h1>
-      <div class="about-gif">
-        <img src="about.gif" alt="Arisha">
-      </div>
-    </div>
-    <div class="about-bottom">
       <div class="abody-main">
         <p>I moved from Russia to Kazakhstan at 19 when the war started. Best decision I ever made, even if the first year was a lot.</p>
         <p><span class="pink">I joke in 3 languages and can stand on 1 head.</span> I've been to 25 countries and I'm always planning the next one. At 20 I went to <span class="pink">Cannes Lions as a competitor</span> — and in June 2026 I'm going back for my first gold ;)</p>
         <p>Whether it's a big campaign, a weird idea, or just a coffee chat about design — <span class="pink">I'm in. Let's connect.</span></p>
         <button class="acta" onclick="go('contacts')">Let's connect ↓</button>
       </div>
-      <div class="abody-right">
+    </div>
+    <!-- GAP -->
+    <div class="about-gap"></div>
+    <!-- RIGHT COLUMN -->
+    <div class="about-right">
+      <div class="about-gif">
+        <img src="about.gif" alt="Arisha">
+      </div>
+      <div class="about-right-bottom">
         <div class="abody-side">
           <p>I do yoga every day, drink Chinese tea, and read Russian classics. I'm also studying philology at uni because apparently one passion is never enough.</p>
           <p>I believe in good teamwork, planning, and work-life balance that's actually balanced. I've never burned out — not because I work less, but because I rest properly.</p>
@@ -334,15 +418,15 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 <div id="contacts" class="page">
   <h1 class="ch">Let's<br><span>connect.</span></h1>
   <div class="clist">
-    <a href="https://instagram.com" class="crow" target="_blank">
-      <div class="cleft"><span class="clbl">here I'm beautiful</span><span class="cval">Instagram</span></div>
+    <a href="https://www.instagram.com/ari_sharkitty/" class="crow" target="_blank">
+      <div class="cleft"><span class="clbl">here I'm real</span><span class="cval">Instagram</span></div>
       <div class="ccirc">↗</div>
     </a>
-    <a href="mailto:your@email.com" class="crow">
-      <div class="cleft"><span class="clbl">here I work</span><span class="cval">your@email.com</span></div>
+    <a href="mailto:arina.shakirova.art@gmail.com" class="crow">
+      <div class="cleft"><span class="clbl">here I work</span><span class="cval">arina.shakirova.art@gmail.com</span></div>
       <div class="ccirc">↗</div>
     </a>
-    <a href="https://t.me/" class="crow" target="_blank">
+    <a href="https://t.me/ari_sha_sha" class="crow" target="_blank">
       <div class="cleft"><span class="clbl">here I chat</span><span class="cval">Telegram</span></div>
       <div class="ccirc">↗</div>
     </a>
@@ -351,7 +435,7 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
       <div class="ccirc">↗</div>
     </a>
   </div>
-  <div class="cfooter"><span>Arisha Shakirova</span> — Art Director · Almaty · 2025</div>
+  <div class="cfooter"><span>Arisha Shakirova</span> — Art Director · Almaty · 2026</div>
 </div>
 
 <script>
@@ -380,8 +464,10 @@ function go(id){
 // Restore page from hash on load
 window.addEventListener('load',()=>{
   const hash=window.location.hash.replace('#','');
-  if(hash&&document.getElementById(hash)){
-    if(['home','work','about','contacts'].includes(hash)) go(hash);
+  if(hash){
+    if(['home','work','about','contacts'].includes(hash)){
+      go(hash);
+    }
   }
 });
 
@@ -575,21 +661,24 @@ function openCase(id){
 
 function drag(el){
   let d=false,sx,sy,ox,oy;
-  el.addEventListener('mousedown',e=>{
-    d=true;sx=e.clientX;sy=e.clientY;
-    // Use offsetLeft/offsetTop (absolute position) not getBoundingClientRect (viewport)
+  el.addEventListener('mousedown',function(e){
+    d=true;
+    sx=e.clientX;
+    sy=e.clientY;
     ox=parseInt(el.style.left)||0;
     oy=parseInt(el.style.top)||0;
-    gz++;el.style.zIndex=gz;
+    gz++;
+    el.style.zIndex=gz;
     el.style.transform='rotate(0deg)';
+    e.stopPropagation();
     e.preventDefault();
   });
-  document.addEventListener('mousemove',e=>{
+  document.addEventListener('mousemove',function(e){
     if(!d)return;
     el.style.left=(ox+e.clientX-sx)+'px';
     el.style.top=(oy+e.clientY-sy)+'px';
   });
-  document.addEventListener('mouseup',()=>d=false);
+  document.addEventListener('mouseup',function(){d=false;});
 }
 
 
