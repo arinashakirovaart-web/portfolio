@@ -151,7 +151,7 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 .md{width:11px;height:11px;border-radius:50%}
 .md.r{background:#EC6A5E}.md.y{background:#F5BF4F}.md.g{background:#61C554}
 .mfn{font-size:13px;font-weight:700;color:#3d3d3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;position:absolute;left:0;right:0;pointer-events:none}
-.mw img{display:block;width:699px;height:490px;object-fit:cover;pointer-events:none}
+.mw img{display:block;pointer-events:none}
 
 /* ===== ABOUT ===== */
 #about{background:#000;padding-top:70px;overflow-y:auto}
@@ -455,7 +455,18 @@ function go(id){
 // CASES
 const caseData={
   bigideas:{label:'BIG IDEAS',imgs:['Big%20Ideas/board-case.jpg','Big%20Ideas/Digital-KZ07-02%20copy.jpg','Big%20Ideas/MEDIA-KZ05%20copy.jpg','Big%20Ideas/Liquid_Death_board%20copy%202.jpg','Big%20Ideas/telegram-cloud-photo-size-2-5391282369052398663-y.jpg','Big%20Ideas/Print-KZ05-01.jpg']},
-  uxui:{label:'UX/UI DESIGN',imgs:['work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png']},
+  uxui:{label:'UX/UI DESIGN',windows:[
+    {src:'Ux-ui%20design/Kotex_2025.png',w:419,h:1285,name:'Kotex_2025'},
+    {src:'Ux-ui%20design/Kinder_Harry%20Potter_2024.png',w:419,h:2827,name:'Kinder_Harry_Potter_2024'},
+    {src:'Ux-ui%20design/SpeakUp_2025.png',w:419,h:1519,name:'SpeakUp_2025'},
+    {src:'Ux-ui%20design/Kinder_2025.png',w:198,h:820,name:'Kinder_2025'},
+    {src:'Ux-ui%20design/Kinder_2024.png',w:419,h:2196,name:'Kinder_2024'},
+    {src:'Ux-ui%20design/IQOS_app_2026.png',w:419,h:877,name:'IQOS_app_2026'},
+    {src:'Ux-ui%20design/IQOS_2026.png',w:419,h:1187,name:'IQOS_2026'},
+    {src:'Ux-ui%20design/IQOS_2024.png',w:198,h:1708,name:'IQOS_2024'},
+    {src:'Ux-ui%20design/IQOS_2023.png',w:198,h:1443,name:'IQOS_2023'},
+  ]},
+
   kv:{label:'KEY VISUALS',imgs:['work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png']},
   smm:{label:'SMM DESIGN',imgs:['work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg']},
   video:{label:'VIDEO CASES',imgs:['work/video%20cases.png','work/video%20cases.png']},
@@ -466,7 +477,7 @@ const caseData={
 
 const names={
   bigideas:['Kotex_Blood_Sisters_2024','Young_Cannes_Lions_2025_BRONZE','Young_Cannes_Lions_2026_GOLD','Mads_course_2025','Young_Cannes_Lions_2024_GOLD','Young_Cannes_Lions_2023_SILVER'],
-  uxui:['Kinder_HP','IQOS_engraving','Kotex_web','Flash_Up','Kinder_Surprise','IQOS_page'],
+  uxui:[],
   kv:['Dequine_2025','Lipton_2026','Eden_2025','RedBull_2025','IQOS_2026','Magnum','Finish_2024','Domestos'],
   smm:['Kotex_feed','Kinder_stories','Umschool_posts','Kotex_target','Kinder_reels','Umschool_target'],
   video:['Kotex_Blood_Sisters_case','Kotex_Huggies_case'],
@@ -482,15 +493,17 @@ function openCase(id){
   const wrap=document.getElementById('wins');
   wrap.innerHTML='';gz=20;
   const W=window.innerWidth,H=window.innerHeight;
-  cfg.imgs.forEach((src,i)=>{
+  const items=cfg.windows||cfg.imgs.map((src,i)=>({src,w:699,h:490,name:(names[id]||[])[i]||'work_0'+(i+1)}));
+  items.forEach((item,i)=>{
     const win=document.createElement('div');
     win.className='mw';
-    const w=699;
+    const w=item.w;
+    const maxH=Math.min(item.h,600);
     const x=40+Math.random()*(W-w-60);
-    const y=90+Math.random()*(H-540);
+    const y=90+Math.random()*(H-200);
     const r=(Math.random()-.5)*12;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
-    win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${(names[id]||[])[i]||'work_0'+(i+1)}</span></div><img src="${src}" alt="" loading="lazy">`;
+    win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;max-height:${maxH}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:auto;display:block;pointer-events:none"></div>`;
     drag(win);
     wrap.appendChild(win);
   });
