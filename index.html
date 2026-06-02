@@ -270,9 +270,84 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 .ccirc{width:38px;height:38px;border-radius:50%;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .3s}
 .cfooter{margin-top:40px;font-size:10px;color:#333;letter-spacing:.1em;text-transform:uppercase}
 .cfooter span{color:var(--pink)}
+
+/* ===== MOBILE STUB ===== */
+#mobile-stub{
+  display:none;
+  position:fixed;inset:0;
+  background:#000;
+  z-index:99999;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px;
+}
+#mobile-stub .ms-heart{font-size:48px;margin-bottom:24px}
+#mobile-stub h2{font-size:28px;font-weight:400;color:var(--pink);line-height:1.2;margin-bottom:16px}
+#mobile-stub p{font-size:16px;color:#666;line-height:1.6}
+
+@media(max-width:768px){
+  #mobile-stub{display:flex}
+  .page{display:none!important}
+  nav{display:none!important}
+  #cur{display:none!important}
+}
+
+/* ===== LAPTOP ADAPTIVE ===== */
+@media(max-width:1300px){
+  /* HOME */
+  .hero-right{width:280px}
+  .hero-bio{font-size:18px;line-height:1.5}
+
+  /* WORK */
+  .work-grid{padding:20px 40px 60px;gap:12px}
+
+  /* ABOUT */
+  .about-inner{
+    grid-template-columns:1fr 40px minmax(0,500px);
+    padding:40px 40px 60px;
+  }
+  .ah1{width:100%;height:auto;font-size:clamp(36px,4.5vw,60px)}
+  .abody-main p{font-size:clamp(22px,2.5vw,36px)}
+  .about-gif{width:100%;height:auto}
+  .about-gif img{width:100%;height:auto}
+  .abody-side{width:auto;flex:1}
+}
+
+@media(max-width:1100px){
+  /* HOME */
+  .hero-title{font-size:clamp(40px,6vw,80px)}
+  .hero-right{width:240px;right:40px}
+  .hero-bio{font-size:16px}
+
+  /* WORK */
+  .work-grid{padding:20px 24px 60px}
+
+  /* ABOUT */
+  .about-inner{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+    padding:40px 40px 60px;
+  }
+  .about-gap{display:none}
+  .about-right{margin-top:40px}
+  .about-gif{width:100%;height:auto;max-height:500px;overflow:hidden}
+  .about-gif img{width:100%;height:auto;object-fit:cover}
+
+  /* CONTACTS */
+  #contacts{padding:80px 40px 60px}
+  .ch{font-size:clamp(40px,8vw,80px)}
+}
 </style>
 </head>
 <body>
+
+<div id="mobile-stub">
+  <img src="about.gif" style="width:180px;height:180px;object-fit:cover;border-radius:50%;margin-bottom:24px">
+  <h2>This portfolio is designed<br>for desktop</h2>
+  <p>Open on your laptop<br>for the full experience ♥</p>
+</div>
 
 <div id="cur">
   <svg width="20" height="18" viewBox="0 0 20 18">
@@ -467,8 +542,18 @@ window.addEventListener('load',()=>{
   if(hash){
     if(['home','work','about','contacts'].includes(hash)){
       go(hash);
+    } else if(hash.startsWith('case_')){
+      const caseId=hash.replace('case_','');
+      if(caseData[caseId]) openCase(caseId);
+      else go('work');
     }
   }
+});
+
+// Also update cursor on case page mousemove
+document.getElementById('case').addEventListener('mousemove',function(e){
+  const c=document.getElementById('cur-black');
+  if(c&&c.style.display!=='none'){c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';}
 });
 
 // CASES
@@ -587,7 +672,7 @@ const names={
   ai:['GSM_ai','IQOS_ai','Kinder_ai','Domestos_ai']
 };
 
-let gz=20;
+let gz=100;
 function openCase(id){
   const cfg=caseData[id];
   if(document.getElementById('caselbl'))document.getElementById('caselbl').textContent=cfg.label;
@@ -603,7 +688,7 @@ function openCase(id){
       const x=40+Math.random()*(W-w-60);
       const y=90+i*280+Math.random()*60;
       const r=(Math.random()-.5)*8;
-      win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
+      gz++;win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${gz}`;
       win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${vid.name}</span></div><div style="position:relative;width:${w}px;height:${vid.h}px;background:#000;overflow:hidden;border-radius:0 0 10px 10px"><iframe id="yt_${i}" width="${w}" height="${vid.h}" src="https://www.youtube.com/embed/${vid.ytId}?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display:block;border-radius:0 0 10px 10px"></iframe></div>`;
       drag(win);
       wrap.appendChild(win);
@@ -640,7 +725,7 @@ function openCase(id){
     const x=Math.max(20,Math.min(W-w-20, cx-w/2+(Math.random()-0.5)*2*spreadX));
     const y=Math.max(pileTop,Math.min(pileTop+pileH-h*0.3, cy-h/2+(Math.random()-0.5)*2*spreadY));
     const r=(Math.random()-.5)*24;
-    win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
+    gz++;win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${gz}`;
     win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;height:${h}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:${h}px;object-fit:cover;display:block;pointer-events:none"></div>`;
     drag(win);
     wrap.appendChild(win);
@@ -652,11 +737,7 @@ function openCase(id){
   document.getElementById('cur').style.display='none';
   document.getElementById('cur-black').style.display='block';
   window.location.hash='case_'+id;
-  // Move black cursor with mouse
-  document.getElementById('case').addEventListener('mousemove',function moveCur(e){
-    const c=document.getElementById('cur-black');
-    c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';
-  },{once:false});
+  window._lastCaseId=id;
 }
 
 function drag(el){
