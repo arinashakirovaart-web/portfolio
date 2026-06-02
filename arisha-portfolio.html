@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arisha — Art Director</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pink:#FF1F78;--black:#0a0a0a;--white:#ffffff;--gray:#666}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Manrope',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-55%);transition:transform .12s}
+#cur svg{display:block}
+
+/* NAV */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;background:rgba(20,20,20,0.85);backdrop-filter:blur(16px);border:1px solid #222;border-radius:100px;padding:6px 8px;display:flex;gap:4px}
+.nav-btn{background:none;border:none;color:#777;font-family:'Manrope',sans-serif;font-size:12px;font-weight:500;letter-spacing:.04em;padding:8px 20px;border-radius:100px;cursor:none;transition:all .25s}
+.nav-btn:hover{color:var(--white)}
+.nav-btn.active{background:var(--pink);color:var(--white)}
+
+/* PAGES */
+.page{display:none;min-height:100vh}
+.page.on{display:block}
+
+/* ===================== HOME ===================== */
+#home{padding:80px 60px 0;min-height:100vh;display:flex;flex-direction:column}
+.home-main{flex:1;display:flex;align-items:center;gap:80px;padding:40px 0 60px}
+.home-left{flex:1}
+.hero-title{font-size:clamp(52px,8vw,100px);font-weight:800;line-height:.9;letter-spacing:-.04em;display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:40px}
+.hero-title .pink{color:var(--pink)}
+.hero-gif-wrap{width:clamp(60px,8vw,90px);height:clamp(60px,8vw,90px);border-radius:50%;overflow:hidden;display:inline-flex;flex-shrink:0;border:2px solid var(--pink)}
+.hero-gif-wrap img{width:100%;height:100%;object-fit:cover}
+
+.home-right{width:320px;flex-shrink:0}
+.hero-bio{font-size:14px;line-height:1.75;color:#888}
+.hero-bio strong{color:var(--white);font-weight:600}
+.hero-bio .pink{color:var(--pink)}
+
+.emoji-section{margin-top:48px;padding-top:32px;border-top:1px solid #1a1a1a}
+.emoji-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#444;margin-bottom:10px}
+.emoji-row{font-size:20px;letter-spacing:3px}
+
+/* TICKER */
+.ticker{border-top:1px solid #1a1a1a;padding:12px 0;overflow:hidden;margin-top:auto}
+.ticker-inner{display:flex;white-space:nowrap;animation:tickr 25s linear infinite}
+.tick-item{font-size:11px;letter-spacing:.15em;text-transform:lowercase;padding:0 20px;color:#333;display:flex;align-items:center;gap:20px}
+.tick-item .h{color:var(--pink)}
+@keyframes tickr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===================== WORK ===================== */
+#work{padding:80px 0 60px;background:var(--black)}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #1a1a1a;border-left:1px solid #1a1a1a;margin:40px 40px 0}
+.work-card{border-right:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;cursor:none;position:relative;overflow:hidden;transition:border-color .3s;background:var(--black)}
+.work-card:hover{border-color:var(--pink)}
+.work-card:hover .wc-border-overlay{opacity:1}
+.wc-border-overlay{position:absolute;inset:0;border:2px solid var(--pink);opacity:0;transition:opacity .3s;pointer-events:none;z-index:2}
+.wc-preview{width:100%;aspect-ratio:16/10;overflow:hidden;position:relative}
+.wc-preview img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.work-card:hover .wc-preview img{transform:scale(1.04)}
+.wc-info{padding:20px 24px 24px;display:flex;justify-content:space-between;align-items:flex-end}
+.wc-text .wc-cat{font-size:11px;color:#555;letter-spacing:.05em;margin-bottom:4px}
+.wc-text .wc-title{font-size:16px;font-weight:700;color:var(--white)}
+.wc-text .wc-clients{font-size:11px;color:#555;margin-top:3px}
+.wc-arrow{width:36px;height:36px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white);flex-shrink:0;transition:transform .3s}
+.work-card:hover .wc-arrow{transform:rotate(45deg) scale(1.1)}
+
+/* ===================== CASE WINDOWS ===================== */
+#case{padding:70px 0 0;min-height:100vh;position:relative;overflow:hidden}
+.case-bg{position:absolute;inset:0;background:var(--pink);z-index:0}
+.case-controls{position:absolute;top:80px;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:0 40px}
+.case-back-btn{background:rgba(0,0,0,0.6);border:1px solid rgba(0,0,0,0.4);color:var(--white);font-family:'Manrope',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 20px;border-radius:100px;cursor:none;transition:all .3s}
+.case-back-btn:hover{background:rgba(0,0,0,0.8)}
+.case-name{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:rgba(0,0,0,0.4);font-weight:600}
+.case-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:1;pointer-events:none;user-select:none}
+.case-bg-text span{font-size:clamp(18px,3vw,36px);font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:.02em;line-height:1.4;display:block}
+#windows-wrap{position:absolute;inset:0;z-index:10}
+
+/* macOS Window */
+.mac-win{position:absolute;background:#1c1c1e;border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);cursor:grab;user-select:none;border:1px solid rgba(255,255,255,0.08)}
+.mac-win:active{cursor:grabbing}
+.mac-titlebar{background:#2c2c2e;padding:10px 14px;display:flex;align-items:center;gap:6px}
+.mac-dot{width:11px;height:11px;border-radius:50%}
+.mac-dot.r{background:#ff5f56}
+.mac-dot.y{background:#ffbd2e}
+.mac-dot.g{background:#27c93f}
+.mac-filename{font-size:11px;color:#888;margin-left:8px;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.mac-body img{display:block;width:100%;height:auto;pointer-events:none}
+.mac-body .vid-ph{aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.mac-body .vid-ph svg{opacity:.3}
+.mac-body .vid-ph span{font-size:10px;color:#555;letter-spacing:.1em;text-transform:uppercase}
+
+/* ===================== ABOUT ===================== */
+#about{padding:70px 0 0;min-height:100vh;background:var(--black)}
+.about-hero{display:flex;align-items:flex-start;gap:0;min-height:calc(100vh - 70px)}
+.about-photo{width:42%;position:relative;overflow:hidden;min-height:100%;background:#111;flex-shrink:0}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;min-height:500px}
+.about-photo-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);white-space:nowrap;z-index:3}
+.face-canvas{position:absolute;inset:0;pointer-events:none;z-index:2}
+.about-photo:hover .about-photo-label{color:var(--pink)}
+
+.about-text{padding:60px 60px;display:flex;flex-direction:column;justify-content:center}
+.about-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);margin-bottom:12px}
+.about-h1{font-size:clamp(32px,4.5vw,56px);font-weight:800;letter-spacing:-.03em;line-height:.92;margin-bottom:36px}
+.about-body p{font-size:14px;line-height:1.8;color:#888;margin-bottom:18px}
+.about-body .pink{color:var(--pink);font-weight:600}
+.about-body strong{color:var(--white);font-weight:600}
+.about-cta{margin-top:28px;display:inline-block;background:none;border:1px solid var(--pink);color:var(--pink);font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:12px 28px;border-radius:100px;cursor:none;transition:all .3s}
+.about-cta:hover{background:var(--pink);color:var(--white)}
+
+/* META LABELS (Arisha Shakirova, 22 y.o.) */
+.about-meta{font-size:10px;color:#555;line-height:1.5;margin-bottom:20px}
+
+/* ===================== CONTACT ===================== */
+#contacts{padding:70px 60px 60px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;background:var(--black)}
+.contacts-inner{max-width:640px}
+.contacts-h{font-size:clamp(48px,9vw,110px);font-weight:800;letter-spacing:-.05em;line-height:.85;margin-bottom:64px}
+.contacts-h span{color:var(--pink);display:block}
+.c-list{border-top:1px solid #1a1a1a}
+.c-row{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid #1a1a1a;text-decoration:none;color:var(--white);cursor:none;transition:color .3s;position:relative}
+.c-row:hover{color:var(--pink)}
+.c-row:hover .c-arrow-circle{background:var(--pink);transform:rotate(45deg)}
+.c-left{display:flex;flex-direction:column;gap:3px}
+.c-label{font-size:10px;color:#444;letter-spacing:.12em;text-transform:uppercase}
+.c-val{font-size:16px;font-weight:600}
+.c-arrow-circle{width:38px;height:38px;border-radius:50%;border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white);transition:all .3s;flex-shrink:0}
+
+.contacts-footer{margin-top:48px;font-size:10px;color:#333;letter-spacing:.1em;text-transform:uppercase}
+.contacts-footer span{color:var(--pink)}
+</style>
+</head>
+<body>
+
+<!-- HEART CURSOR -->
+<div id="cur">
+  <svg width="20" height="18" viewBox="0 0 20 18">
+    <path d="M10 16.5C10 16.5 1 10.8 1 5.5C1 3.02 3.02 1 5.5 1C7.24 1 8.76 1.98 9.6 3.4C9.8 3.06 10.04 2.74 10.32 2.46C11.16 1.56 12.28 1 13.5 1C15.98 1 18 3.02 18 5.5C18 10.8 10 16.5 10 16.5Z" fill="#FF1F78"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="nav-btn active" onclick="go('home')">Home</button>
+  <button class="nav-btn" onclick="go('work')">Work</button>
+  <button class="nav-btn" onclick="go('about')">About</button>
+  <button class="nav-btn" onclick="go('contacts')">Contact</button>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<div id="home" class="page on">
+  <div class="home-main">
+    <div class="home-left">
+      <div class="hero-title">
+        hey, it's me&nbsp;(
+        <div class="hero-gif-wrap">
+          <img src="/mnt/user-data/uploads/Untitled-1.gif" alt="Arisha">
+        </div>
+        )&nbsp;<span class="pink">— Árisha</span>
+      </div>
+
+      <div class="emoji-section">
+        <div class="emoji-label">emojis that i like for no particular reason:</div>
+        <div class="emoji-row">🪩🤌🐡🫡🍤🍠🚺🤠🫂💕🐦‍⬛💅🥺🤸🏽‍♀️</div>
+      </div>
+    </div>
+
+    <div class="home-right">
+      <p class="hero-bio">
+        Gen-Z <span class="pink">art director and designer from Almaty.</span>
+        I've been in design for 5 years and work at FCB agency for the past 3.<br><br>
+        I lead projects from idea to production, I've worked with international and local clients, and with audiences of all ages. I'm <span class="pink">not a perfectionist</span> — I'm someone who <span class="pink">loves design that actually works.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="tick-item"><span class="h">♥</span> art direction <span class="h">♥</span> webdesign <span class="h">♥</span> print <span class="h">♥</span> illustration <span class="h">♥</span> smm <span class="h">♥</span> photo&video direction <span class="h">♥</span> merch <span class="h">♥</span> concept thinking <span class="h">♥</span> ux/ui <span class="h">♥</span> key visuals <span class="h">♥</span> ai tools <span class="h">♥</span></span>
+      <span class="tick-item"><span class="h">♥</span> art direction <span class="h">♥</span> webdesign <span class="h">♥</span> print <span class="h">♥</span> illustration <span class="h">♥</span> smm <span class="h">♥</span> photo&video direction <span class="h">♥</span> merch <span class="h">♥</span> concept thinking <span class="h">♥</span> ux/ui <span class="h">♥</span> key visuals <span class="h">♥</span> ai tools <span class="h">♥</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WORK ===================== -->
+<div id="work" class="page">
+  <div style="padding:0 40px;margin-top:20px;display:flex;justify-content:space-between;align-items:baseline">
+    <h1 style="font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.03em">Selected <span style="color:var(--pink)">Work</span></h1>
+  </div>
+  <div class="work-grid">
+
+    <div class="work-card" onclick="openCase('bigideas')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/board-case.jpg" alt="Big Ideas"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">Big Ideas</div>
+          <div class="wc-title">Concept Thinking</div>
+          <div class="wc-clients">EFES, Kotex, Liquid Death etc.</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('uxui')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Ux-ui_design.png" alt="UX UI"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">UX/UI Design</div>
+          <div class="wc-title">Digital Products</div>
+          <div class="wc-clients">Kinder, IQOS, Kotex etc.</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('kv')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Key_Visuals.png" alt="Key Visuals"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">Key Visuals</div>
+          <div class="wc-title">Campaign Visuals</div>
+          <div class="wc-clients">Lipton, IQOS, RedBull etc.</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('smm')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/SMM_design_.png" alt="SMM"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">SMM Design</div>
+          <div class="wc-title">Social Media</div>
+          <div class="wc-clients">Kotex, Kinder, Umschool</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('video')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Video_cases.png" alt="Video Cases"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">Video Cases</div>
+          <div class="wc-title">Campaign Reels</div>
+          <div class="wc-clients">Kotex, Huggies</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('photo')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Photo_Video_shootings.png" alt="Photo"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">Photo & Video Shootings</div>
+          <div class="wc-title">Production Direction</div>
+          <div class="wc-clients">Kinder, Kotex</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('merch')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Merch.png" alt="Merch"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">Merch</div>
+          <div class="wc-title">Physical Goods</div>
+          <div class="wc-clients">Nutella, IQOS, Lipton и др</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="openCase('ai')">
+      <div class="wc-border-overlay"></div>
+      <div class="wc-preview"><img src="/mnt/user-data/uploads/Ai_using.png" alt="AI"></div>
+      <div class="wc-info">
+        <div class="wc-text">
+          <div class="wc-cat">AI Using</div>
+          <div class="wc-title">AI-generated Work</div>
+          <div class="wc-clients">GSM, IQOS, Kinder etc.</div>
+        </div>
+        <div class="wc-arrow">↗</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== CASE ===================== -->
+<div id="case" class="page">
+  <div class="case-bg"></div>
+  <div class="case-controls">
+    <button class="case-back-btn" onclick="go('work')">← Back</button>
+    <div class="case-name" id="case-name-label">KEY VISUALS</div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="case-bg-text">
+    <span>don't forget</span>
+    <span>what are you</span>
+    <span>here for)</span>
+  </div>
+  <div id="windows-wrap"></div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div id="about" class="page">
+  <div class="about-hero">
+    <div class="about-photo" id="about-photo-col">
+      <img src="/mnt/user-data/uploads/IMG_7135.jpg" alt="Arisha" id="about-img">
+      <canvas class="face-canvas" id="face-canvas"></canvas>
+      <div class="about-photo-label">don't touch my face</div>
+    </div>
+    <div class="about-text">
+      <div class="about-meta">Arisha Shakirova, 22 y.o.</div>
+      <div class="about-eyebrow">About</div>
+      <h1 class="about-h1">Hey, I'm Arisha! Hiking in summer, skiing in winter — I'm a woman of many hobbies.</h1>
+      <div class="about-body">
+        <p>I moved from Russia to Kazakhstan at 19 when the war started. <strong>Best decision I ever made</strong>, even if the first year was a lot.</p>
+        <p><span class="pink">I joke in 3 languages and can stand on 1 head.</span> I've been to 25 countries and I'm always planning the next one. At 20 I went to <span class="pink">Cannes Lions as a competitor</span> — and in June 2026 I'm going back for my first gold&nbsp;;)</p>
+        <p>I do yoga every day, drink Chinese tea, and read Russian classics. I'm also studying philology at uni because apparently <strong>one passion is never enough.</strong></p>
+        <p>I believe in good teamwork, planning, and work-life balance that's actually balanced. I've never burned out — not because I work less, but because I rest properly.</p>
+        <p>Whether it's a big campaign, a weird idea, or just a coffee chat about design — I'm in. Let's connect.</p>
+      </div>
+      <button class="about-cta" onclick="go('contacts')">Let's connect ↓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACTS ===================== -->
+<div id="contacts" class="page">
+  <div class="contacts-inner">
+    <h1 class="contacts-h">Let's<br><span>connect.</span></h1>
+    <div class="c-list">
+      <a href="https://instagram.com" class="c-row">
+        <div class="c-left">
+          <span class="c-label">here I'm beautiful</span>
+          <span class="c-val">Instagram</span>
+        </div>
+        <div class="c-arrow-circle">↗</div>
+      </a>
+      <a href="mailto:your@email.com" class="c-row">
+        <div class="c-left">
+          <span class="c-label">here I work</span>
+          <span class="c-val">your@email.com</span>
+        </div>
+        <div class="c-arrow-circle">↗</div>
+      </a>
+      <a href="https://t.me/arisha" class="c-row">
+        <div class="c-left">
+          <span class="c-label">here I chat</span>
+          <span class="c-val">Telegram</span>
+        </div>
+        <div class="c-arrow-circle">↗</div>
+      </a>
+      <a href="#" class="c-row">
+        <div class="c-left">
+          <span class="c-label">my CV for HR</span>
+          <span class="c-val">Download CV</span>
+        </div>
+        <div class="c-arrow-circle">↗</div>
+      </a>
+    </div>
+    <div class="contacts-footer">
+      <span>Arisha Shakirova</span> — Art Director · Almaty · 2025
+    </div>
+  </div>
+</div>
+
+<script>
+// CURSOR
+document.addEventListener('mousemove', e => {
+  const c = document.getElementById('cur');
+  c.style.left = e.clientX + 'px';
+  c.style.top = e.clientY + 'px';
+});
+
+// NAV
+const navMap = {home:0, work:1, about:2, contacts:3};
+function go(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === navMap[id]);
+  });
+  window.scrollTo(0,0);
+}
+
+// CASE DATA — windows per category
+const caseConfig = {
+  bigideas: {
+    label: 'BIG IDEAS',
+    windows: [
+      {file:'Digital-KZ07-02_copy.jpg', name:'Young Cannes Lions_2025_BRONZE'},
+      {file:'board-case.jpg', name:'Kotex_Blood_Sisters_2024'},
+      {file:'telegram-cloud-photo-size-2-5391282369052398663-y.jpg', name:'Young Cannes Lions_2023_SILVER'},
+      {file:'Print-KZ05-01.jpg', name:'Young Cannes Lions_2026_GOLD'},
+      {file:'board-case.jpg', name:'Liquid_Death_2024'},
+      {file:'Digital-KZ07-02_copy.jpg', name:'EFES_concept_2025'},
+    ]
+  },
+  uxui: {
+    label: 'UX/UI DESIGN',
+    windows: [
+      {file:'Ux-ui_design.png', name:'Kinder_HP_2024'},
+      {file:'Ux-ui_design.png', name:'IQOS_engraving_2025'},
+      {file:'Ux-ui_design.png', name:'Kotex_2025'},
+      {file:'Ux-ui_design.png', name:'Flash_Up_2025'},
+      {file:'Ux-ui_design.png', name:'Kinder_Surprise_2024'},
+      {file:'Ux-ui_design.png', name:'IQOS_page_2026'},
+    ]
+  },
+  kv: {
+    label: 'KEY VISUALS',
+    windows: [
+      {file:'dequine2.jpg', name:'Dequine_2025'},
+      {file:'lipton_02.jpg', name:'Lipton_2026'},
+      {file:'kv_copy.png', name:'Eden_2025'},
+      {file:'kv_copy.png', name:'RedBull_2025'},
+      {file:'kv_copy.png', name:'IQOS_2026'},
+      {file:'kv_copy.png', name:'Magnum_2024'},
+      {file:'dequine2.jpg', name:'Finish_2024'},
+      {file:'lipton_02.jpg', name:'Domestos_2026'},
+    ]
+  },
+  smm: {
+    label: 'SMM DESIGN',
+    windows: [
+      {file:'SMM_design_.png', name:'Kotex_feed_2025'},
+      {file:'SMM_design_.png', name:'Kinder_stories_2025'},
+      {file:'SMM_design_.png', name:'Umschool_posts_2025'},
+      {file:'SMM_design_.png', name:'Kotex_target_2025'},
+      {file:'SMM_design_.png', name:'Kinder_reels_2025'},
+      {file:'SMM_design_.png', name:'Umschool_target_2025'},
+    ]
+  },
+  video: {
+    label: 'VIDEO CASES',
+    windows: [
+      {file:'Video_cases.png', name:'Kotex_Blood_Sisters_2024'},
+      {file:'Video_cases.png', name:'Kotex_Huggies_internal_case_2026'},
+    ]
+  },
+  photo: {
+    label: 'PHOTO & VIDEO SHOOTINGS',
+    windows: [
+      {file:'Photo_Video_shootings.png', name:'Kinder_2025'},
+      {file:'Photo_Video_shootings.png', name:'Kotex_2024'},
+      {file:'Photo_Video_shootings.png', name:'Kinder_Bueno_2025'},
+      {file:'Photo_Video_shootings.png', name:'Kotex_shootings_2024'},
+      {file:'Photo_Video_shootings.png', name:'Kinder_family_2025'},
+      {file:'Photo_Video_shootings.png', name:'Kotex_studio_2024'},
+    ]
+  },
+  merch: {
+    label: 'MERCH',
+    windows: [
+      {file:'Merch.png', name:'Kotex_2024'},
+      {file:'Merch.png', name:'Lipton_2025'},
+      {file:'Merch.png', name:'kinder_2024'},
+      {file:'Merch.png', name:'IQOS_2026'},
+      {file:'Merch.png', name:'kotex_2023'},
+      {file:'Merch.png', name:'Lipton_bag_2025'},
+    ]
+  },
+  ai: {
+    label: 'AI USING',
+    windows: [
+      {file:'Ai_using.png', name:'GSM_2026'},
+      {file:'Ai_using.png', name:'IQOS_2026'},
+      {file:'Ai_using.png', name:'Kinder_2025'},
+      {file:'Ai_using.png', name:'Domestos_2026'},
+    ]
+  }
+};
+
+let globalZ = 20;
+
+function openCase(id) {
+  const cfg = caseConfig[id];
+  document.getElementById('case-name-label').textContent = cfg.label;
+  const wrap = document.getElementById('windows-wrap');
+  wrap.innerHTML = '';
+  globalZ = 20;
+
+  const W = Math.max(document.documentElement.clientWidth, 800);
+  const H = Math.max(document.documentElement.clientHeight, 600);
+
+  cfg.windows.forEach((w, i) => {
+    const win = document.createElement('div');
+    win.className = 'mac-win';
+    const winW = 200 + Math.random() * 140;
+    const x = 40 + Math.random() * (W - winW - 80);
+    const y = 100 + Math.random() * (H - 320);
+    const rot = (Math.random() - 0.5) * 16;
+    win.style.cssText = `width:${winW}px;left:${x}px;top:${y}px;transform:rotate(${rot}deg);z-index:${20+i}`;
+
+    win.innerHTML = `
+      <div class="mac-titlebar">
+        <div class="mac-dot r"></div>
+        <div class="mac-dot y"></div>
+        <div class="mac-dot g"></div>
+        <span class="mac-filename">${w.name}</span>
+      </div>
+      <div class="mac-body">
+        <img src="/mnt/user-data/uploads/${w.file}" alt="${w.name}" loading="lazy">
+      </div>`;
+
+    makeDraggable(win);
+    wrap.appendChild(win);
+  });
+
+  go('case');
+}
+
+function makeDraggable(el) {
+  let dragging = false, sx, sy, ox, oy;
+  el.addEventListener('mousedown', e => {
+    if (e.target.closest('.mac-titlebar') || !e.target.closest('.mac-body')) {
+      dragging = true;
+      sx = e.clientX; sy = e.clientY;
+      const r = el.getBoundingClientRect();
+      ox = r.left; oy = r.top;
+      globalZ++;
+      el.style.zIndex = globalZ;
+      el.style.transform = 'rotate(0deg)';
+      e.preventDefault();
+    }
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    el.style.left = (ox + e.clientX - sx) + 'px';
+    el.style.top = (oy + e.clientY - sy) + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+}
+
+// ABOUT — face doodle
+const photoCol = document.getElementById('about-photo-col');
+const canvas = document.getElementById('face-canvas');
+const ctx = canvas.getContext('2d');
+let doodleTimer = null;
+let spinning = false;
+let rot = 0;
+
+function resizeCv() {
+  canvas.width = photoCol.offsetWidth;
+  canvas.height = photoCol.offsetHeight;
+}
+
+photoCol.addEventListener('mouseenter', () => {
+  resizeCv();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  doodleTimer = setInterval(drawDoodle, 55);
+  spinning = true;
+  doSpin();
+});
+photoCol.addEventListener('mouseleave', () => {
+  clearInterval(doodleTimer);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  spinning = false;
+  document.getElementById('about-img').style.transform = '';
+});
+
+function drawDoodle() {
+  ctx.strokeStyle = '#FF1F78';
+  ctx.lineWidth = 1 + Math.random() * 2;
+  ctx.lineCap = 'round';
+  ctx.globalAlpha = 0.4 + Math.random() * 0.5;
+  ctx.beginPath();
+  const x = Math.random() * canvas.width;
+  const y = canvas.height * 0.1 + Math.random() * canvas.height * 0.75;
+  ctx.moveTo(x, y);
+  for (let i = 0; i < 3; i++) {
+    ctx.lineTo(x + (Math.random()-.5)*70, y + (Math.random()-.5)*70);
+  }
+  ctx.stroke();
+  if (Math.random() > .65) {
+    ctx.font = '13px serif';
+    ctx.fillStyle = '#FF1F78';
+    ctx.globalAlpha = .7;
+    ctx.fillText('♥', Math.random()*canvas.width, Math.random()*canvas.height*.85);
+  }
+}
+
+function doSpin() {
+  if (!spinning) return;
+  rot += 1.5;
+  const img = document.getElementById('about-img');
+  img.style.transform = `rotate(${Math.sin(rot * 0.04) * 7}deg) scale(${1 + Math.sin(rot*0.07)*0.015})`;
+  requestAnimationFrame(doSpin);
+}
+</script>
+</body>
+</html>
