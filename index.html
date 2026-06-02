@@ -115,21 +115,22 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 }
 .case-bg-txt span{
   display:block;
-  font-size:clamp(20px,3.5vw,42px);
-  font-weight:400;color:rgba(0,0,0,.1);
-  line-height:1.5;
+  font-size:clamp(40px,8vw,112px);
+  font-weight:400;color:rgba(254,46,157,0.4);
+  line-height:1.1;
 }
 .case-ctrl{
-  position:fixed;top:20px;left:50%;
-  transform:translateX(-50%);
+  position:fixed;top:20px;left:20px;
   z-index:600;display:flex;
   align-items:center;gap:12px;
 }
 .case-back{
-  background:rgba(0,0,0,.7);border:none;
-  color:#fff;font-family:'Inter',sans-serif;
-  font-size:11px;padding:8px 20px;
+  background:rgba(240,240,240,0.9);
+  border:none;
+  color:#333;font-family:'Inter',sans-serif;
+  font-size:14px;padding:10px 20px;
   border-radius:48px;cursor:none;
+  font-weight:400;
 }
 .case-lbl{
   background:rgba(0,0,0,.4);color:rgba(255,255,255,.5);
@@ -139,18 +140,18 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 }
 #wins{position:absolute;inset:0;z-index:10}
 .mw{
-  position:absolute;background:#1c1c1e;
+  position:absolute;
   border-radius:10px;overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  box-shadow:0 0 20px rgba(0,0,0,.15),0 25px 30px rgba(0,0,0,.35);
   cursor:grab;user-select:none;
-  border:1px solid rgba(255,255,255,.06);
+  background:#f0f0f0;
 }
 .mw:active{cursor:grabbing}
-.mbar{background:#2c2c2e;padding:10px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.04)}
+.mbar{background:#fff;padding:7px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(0,0,0,.1)}
 .md{width:11px;height:11px;border-radius:50%}
-.md.r{background:#ff5f56}.md.y{background:#ffbd2e}.md.g{background:#27c93f}
-.mfn{font-size:11px;color:#666;margin-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
-.mw img{display:block;width:100%;height:auto;pointer-events:none}
+.md.r{background:#EC6A5E}.md.y{background:#F5BF4F}.md.g{background:#61C554}
+.mfn{font-size:11px;font-weight:700;color:#3d3d3d;margin-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;text-align:center;flex:1}
+.mw img{display:block;width:699px;height:490px;object-fit:cover;pointer-events:none}
 
 /* ===== ABOUT ===== */
 #about{background:#000;padding-top:70px;overflow-y:auto}
@@ -366,12 +367,11 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 
 <!-- CASE -->
 <div id="case" class="page">
-  <div class="case-bg-txt">
+  <div class="case-bg-txt" id="case-bg-txt">
     <span>don't forget</span><span>what are you</span><span>here for)</span>
   </div>
   <div class="case-ctrl" id="casectrl" style="display:none">
     <button class="case-back" onclick="go('work')">← Back</button>
-    <div class="case-lbl" id="caselbl"></div>
   </div>
   <div id="wins"></div>
 </div>
@@ -454,7 +454,7 @@ function go(id){
 
 // CASES
 const caseData={
-  bigideas:{label:'BIG IDEAS',imgs:['work/Big%20Ideas.jpg','work/Big%20Ideas.jpg','work/Big%20Ideas.jpg','work/Big%20Ideas.jpg','work/Big%20Ideas.jpg','work/Big%20Ideas.jpg']},
+  bigideas:{label:'BIG IDEAS',imgs:['Big%20Ideas/Digital-KZ07-02%20copy.jpg','Big%20Ideas/board-case.jpg','Big%20Ideas/telegram-cloud-photo-size-2-5391282369052398663-y.jpg','Big%20Ideas/Print-KZ05-01.jpg','Big%20Ideas/Liquid_Death_board%20copy%202.jpg','Big%20Ideas/MEDIA-KZ05%20copy.jpg']},
   uxui:{label:'UX/UI DESIGN',imgs:['work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png','work/uxui.png']},
   kv:{label:'KEY VISUALS',imgs:['work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png','work/kv.png']},
   smm:{label:'SMM DESIGN',imgs:['work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg','work/SMM.jpg']},
@@ -465,7 +465,7 @@ const caseData={
 };
 
 const names={
-  bigideas:['Investree_2025','Kotex_Blood_Sisters','Young_Lions_2026','Young_Lions_2025','Liquid_Death','EFES_concept'],
+  bigideas:['Young_Cannes_Lions_2025_BRONZE','Kotex_Blood_Sisters_2024','Young_Cannes_Lions_2026_GOLD','Young_Cannes_Lions_2024_GOLD','Young_Cannes_Lions_2023_SILVER','Mads_course_2025'],
   uxui:['Kinder_HP','IQOS_engraving','Kotex_web','Flash_Up','Kinder_Surprise','IQOS_page'],
   kv:['Dequine_2025','Lipton_2026','Eden_2025','RedBull_2025','IQOS_2026','Magnum','Finish_2024','Domestos'],
   smm:['Kotex_feed','Kinder_stories','Umschool_posts','Kotex_target','Kinder_reels','Umschool_target'],
@@ -478,17 +478,17 @@ const names={
 let gz=20;
 function openCase(id){
   const cfg=caseData[id];
-  document.getElementById('caselbl').textContent=cfg.label;
+  if(document.getElementById('caselbl'))document.getElementById('caselbl').textContent=cfg.label;
   const wrap=document.getElementById('wins');
   wrap.innerHTML='';gz=20;
   const W=window.innerWidth,H=window.innerHeight;
   cfg.imgs.forEach((src,i)=>{
     const win=document.createElement('div');
     win.className='mw';
-    const w=180+Math.random()*140;
+    const w=699;
     const x=40+Math.random()*(W-w-60);
-    const y=90+Math.random()*(H-280);
-    const r=(Math.random()-.5)*18;
+    const y=90+Math.random()*(H-540);
+    const r=(Math.random()-.5)*12;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
     win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${(names[id]||[])[i]||'work_0'+(i+1)}</span></div><img src="${src}" alt="" loading="lazy">`;
     drag(win);
@@ -496,7 +496,7 @@ function openCase(id){
   });
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.getElementById('case').classList.add('on');
-  document.getElementById('mainnav').style.display='none';
+  document.getElementById('mainnav').style.display='inline-flex';
   document.getElementById('casectrl').style.display='flex';
 }
 
