@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arisha — Art Director</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pink:#FE2E9D;--black:#000;--nav-bg:#141414;--white:#fff;--gray:#C4C4C4;--dark:#2C2C2C}
+html,body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none;min-height:100vh}
+
+/* CURSOR */
+#cur{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-55%)}
+
+/* NAV */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;background:var(--nav-bg);border-radius:80px;padding:5px 5px;display:inline-flex;gap:0;box-shadow:0 12px 20px rgba(0,0,0,.04)}
+.nav-btn{background:none;border:none;color:var(--gray);font-family:'Inter',sans-serif;font-size:18px;font-weight:400;letter-spacing:-.01em;padding:10px 20px;border-radius:48px;cursor:none;transition:all .25s;line-height:1.4}
+.nav-btn.active{background:var(--pink);color:var(--black)}
+.nav-btn:hover:not(.active){color:var(--white)}
+
+/* PAGES */
+.page{display:none;min-height:100vh}
+.page.on{display:block}
+
+/* ===== HOME ===== */
+#home{background:var(--black);min-height:100vh;display:flex;flex-direction:column;padding-top:70px}
+.home-body{flex:1;padding:0 60px;display:flex;flex-direction:column;justify-content:center;padding-top:60px;padding-bottom:0}
+
+.hero-title{font-size:clamp(48px,7.8vw,112px);font-weight:400;line-height:1.02;letter-spacing:-.02em;color:var(--pink);margin-bottom:32px;display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.hero-gif{width:clamp(56px,8vw,100px);height:clamp(56px,8vw,100px);border-radius:50%;overflow:hidden;display:inline-flex;flex-shrink:0;vertical-align:middle}
+.hero-gif img{width:100%;height:100%;object-fit:cover}
+
+.hero-right{position:absolute;right:60px;top:50%;transform:translateY(-40%);width:340px}
+.hero-bio{font-size:23px;font-weight:400;line-height:26px;color:var(--white)}
+.hero-bio .pink{color:var(--pink)}
+.hero-bio p{margin-bottom:16px}
+
+.emoji-block{margin-top:40px;padding-bottom:24px}
+.emoji-label{font-size:16px;color:var(--white);line-height:31px;text-transform:lowercase}
+.emoji-row{font-size:20px;margin-top:2px}
+
+/* TICKER */
+.ticker-wrap{border-top:1px solid #1a1a1a;margin-top:auto;overflow:hidden;height:81px;display:flex;align-items:center}
+.ticker-inner{display:flex;white-space:nowrap;animation:tickr 28s linear infinite;align-items:center;height:81px}
+.tick-word{font-size:34px;font-weight:300;color:var(--dark);padding:0 0;line-height:81px}
+.tick-heart{display:inline-flex;align-items:center;margin:0 16px;flex-shrink:0}
+.tick-heart svg{width:18px;height:19px}
+@keyframes tickr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== WORK ===== */
+#work{background:var(--black);padding-top:80px}
+.work-title{padding:20px 40px 32px;font-size:clamp(28px,4vw,48px);font-weight:400}
+.work-title em{color:var(--pink);font-style:normal}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1e1e1e;border-left:1px solid #1e1e1e;margin:0 40px 60px}
+.wcard{border-right:1px solid #1e1e1e;border-bottom:1px solid #1e1e1e;cursor:none;position:relative;overflow:hidden;transition:border-color .3s;background:var(--black)}
+.wcard:hover{border-color:var(--pink)}
+.wcard-img{width:100%;aspect-ratio:16/10;overflow:hidden;position:relative;background:#111}
+.wcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.wcard:hover .wcard-img img{transform:scale(1.04)}
+.wcard-info{padding:18px 24px 22px;display:flex;justify-content:space-between;align-items:flex-end}
+.wcard-text .cat{font-size:11px;color:#555;letter-spacing:.06em;margin-bottom:4px;text-transform:uppercase}
+.wcard-text .title{font-size:18px;font-weight:600;color:var(--white);margin-bottom:3px}
+.wcard-text .clients{font-size:11px;color:#555}
+.wcard-arrow{width:34px;height:34px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--black);flex-shrink:0;transition:transform .3s}
+.wcard:hover .wcard-arrow{transform:rotate(45deg) scale(1.1)}
+
+/* ===== CASE WINDOWS ===== */
+#case{background:var(--pink);min-height:100vh;position:relative;overflow:hidden;padding-top:70px}
+.case-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;user-select:none;z-index:1}
+.case-bg-text span{display:block;font-size:clamp(20px,3.5vw,42px);font-weight:400;color:rgba(0,0,0,.1);line-height:1.5;letter-spacing:.01em}
+.case-controls{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:600;display:flex;align-items:center;gap:12px}
+.case-back{background:rgba(0,0,0,.7);border:none;color:var(--white);font-family:'Inter',sans-serif;font-size:14px;padding:8px 20px;border-radius:48px;cursor:none;transition:background .3s}
+.case-back:hover{background:rgba(0,0,0,.9)}
+.case-label{background:rgba(0,0,0,.5);color:rgba(255,255,255,.6);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:8px 16px;border-radius:48px}
+#windows-wrap{position:absolute;inset:0;z-index:10}
+
+/* macOS window */
+.mac-win{position:absolute;background:#1c1c1e;border-radius:10px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);cursor:grab;user-select:none;border:1px solid rgba(255,255,255,.06)}
+.mac-win:active{cursor:grabbing}
+.mac-bar{background:#2c2c2e;padding:10px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.04)}
+.mdot{width:11px;height:11px;border-radius:50%}
+.mdot.r{background:#ff5f56}.mdot.y{background:#ffbd2e}.mdot.g{background:#27c93f}
+.mname{font-size:11px;color:#666;margin-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.mac-win img{display:block;width:100%;height:auto;pointer-events:none}
+
+/* ===== ABOUT ===== */
+#about{background:var(--black);padding-top:70px;min-height:100vh}
+.about-wrap{display:grid;grid-template-columns:42% 1fr;min-height:calc(100vh - 70px)}
+.about-photo{position:relative;overflow:hidden;background:#111;min-height:500px}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .3s}
+.about-canvas{position:absolute;inset:0;pointer-events:none;z-index:2}
+.about-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.25);white-space:nowrap;z-index:3;transition:color .3s}
+.about-photo:hover .about-hint{color:var(--pink)}
+.about-text{padding:60px 56px;display:flex;flex-direction:column;justify-content:center}
+.about-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);margin-bottom:16px}
+.about-h1{font-size:clamp(28px,4vw,48px);font-weight:400;line-height:1;letter-spacing:-.02em;margin-bottom:32px}
+.about-body p{font-size:15px;line-height:1.75;color:#888;margin-bottom:16px}
+.about-body .pink{color:var(--pink)}
+.about-body strong{color:var(--white);font-weight:500}
+.about-cta{margin-top:28px;display:inline-block;background:none;border:1px solid var(--pink);color:var(--pink);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:48px;cursor:none;transition:all .3s}
+.about-cta:hover{background:var(--pink);color:var(--black)}
+
+/* ===== CONTACTS ===== */
+#contacts{background:var(--black);padding:80px 60px 60px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.contacts-h{font-size:clamp(52px,10vw,120px);font-weight:400;letter-spacing:-.04em;line-height:.85;margin-bottom:64px}
+.contacts-h span{color:var(--pink);display:block}
+.c-list{border-top:1px solid #1a1a1a}
+.c-row{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid #1a1a1a;text-decoration:none;color:var(--white);cursor:none;transition:color .3s}
+.c-row:hover{color:var(--pink)}
+.c-row:hover .c-circle{background:var(--pink);transform:rotate(45deg)}
+.c-left{display:flex;flex-direction:column;gap:4px}
+.c-label{font-size:10px;color:#444;letter-spacing:.14em;text-transform:uppercase}
+.c-val{font-size:17px;font-weight:400}
+.c-circle{width:38px;height:38px;border-radius:50%;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .3s}
+.contacts-footer{margin-top:40px;font-size:10px;color:#333;letter-spacing:.1em;text-transform:uppercase}
+.contacts-footer span{color:var(--pink)}
+</style>
+</head>
+<body>
+
+<div id="cur">
+  <svg width="20" height="18" viewBox="0 0 20 18">
+    <path d="M10 16.5C10 16.5 1 10.8 1 5.5C1 3.02 3.02 1 5.5 1C7.24 1 8.76 1.98 9.6 3.4C9.8 3.06 10.04 2.74 10.32 2.46C11.16 1.56 12.28 1 13.5 1C15.98 1 18 3.02 18 5.5C18 10.8 10 16.5 10 16.5Z" fill="#FE2E9D"/>
+  </svg>
+</div>
+
+<nav id="main-nav">
+  <button class="nav-btn active" onclick="go('home')">Home</button>
+  <button class="nav-btn" onclick="go('work')">Work</button>
+  <button class="nav-btn" onclick="go('about')">About</button>
+  <button class="nav-btn" onclick="go('contacts')">Contact</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page on">
+  <div class="home-body" style="position:relative">
+    <div style="max-width:860px">
+      <div class="hero-title">
+        hey, it's me&nbsp;(<div class="hero-gif"><img src="images/Untitled-1.gif" alt="Arisha"></div>)&nbsp;— Árisha
+      </div>
+      <div class="emoji-block">
+        <div class="emoji-label">EMOJIS THAT I LIKE<br>FOR NO PARTICULAR REASON:</div>
+        <div class="emoji-row">🪩🤌🐡️💅🫡🍤🚺🤠🫂💕️🥺🤸🏽‍♀️</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bio">
+        <p>Gen-Z <span class="pink">art director and designer from Almaty.</span> I've been in design for 5 years and work at FCB agency for the past 3.</p>
+        <p>I lead projects from idea to production, I've worked with international and local clients, and with audiences of all ages. I'm <span class="pink">not a perfectionist</span> — I'm someone who <span class="pink">loves design that actually works.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <span class="tick-word">art direction</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM0.02 5.79C-0.13 4.26 0.65 2.34 1.82 1.88C2.64 1.37 3.56 0.7 4.78 0.99L5.08 0.31C4.41 0.01 3.56 0 3.11 0.86C2.64 1.02 2.2 1.37 1.82 1.88C1.05 2.92 0.65 4.47 0.77 5.72L0.02 5.79ZM5.08 0.31L5.38 -0.38C6.61 0.16 7.59 1.51 8.29 2.83C9.01 4.2 9.52 5.72 9.74 6.86L9 7L8.26 7.14C8.08 6.16 7.61 4.77 6.96 3.53C6.29 2.26 5.51 1.32 4.78 0.99L5.08 0.31ZM9 7L8.26 7.14C8.14 6.48 8.32 5.71 8.58 5.01C8.86 4.28 9.27 3.5 9.72 2.78C10.18 2.05 10.7 1.36 11.21 0.81C11.69 0.29 12.25 -0.2 12.78 -0.41L13.05 0.29L13.31 0.99C13.13 1.07 12.77 1.33 12.31 1.83C11.87 2.3 11.41 2.92 10.99 3.58C10.57 4.24 10.22 4.92 9.99 5.53C9.75 6.17 9.69 6.62 9.74 6.86L9 7ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">webdesign</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM0.02 5.79C-0.13 4.26 0.65 2.34 1.82 1.88C2.64 1.37 3.56 0.7 4.78 0.99L5.08 0.31C4.41 0.01 3.56 0 3.11 0.86C2.64 1.02 2.2 1.37 1.82 1.88C1.05 2.92 0.65 4.47 0.77 5.72L0.02 5.79ZM5.08 0.31L5.38 -0.38C6.61 0.16 7.59 1.51 8.29 2.83C9.01 4.2 9.52 5.72 9.74 6.86L9 7L8.26 7.14C8.08 6.16 7.61 4.77 6.96 3.53C6.29 2.26 5.51 1.32 4.78 0.99L5.08 0.31ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">print</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">illustration</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">smm</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">photo&video direction</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <!-- repeat for seamless loop -->
+      <span class="tick-word">art direction</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">webdesign</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">print</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">illustration</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">smm</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+      <span class="tick-word">photo&video direction</span><span class="tick-heart"><svg viewBox="0 0 18 19" fill="none"><path d="M2.46 12.48L3.09 12.08C1.9 10.19 0.97 7.91 0.77 5.72L0.02 5.79C-0.49 8.34 0.54 10.85 1.83 12.88L2.46 12.48ZM13.05 0.29L12.78 -0.41C13.92 -0.84 15.08 -0.83 16.08 -0.36C17.09 0.11 17.85 1 18.24 2.2L17.53 2.44L16.82 2.67C16.54 1.81 16.03 1.27 15.45 0.99C14.86 0.72 14.13 0.69 13.31 0.99L13.05 0.29ZM17.53 2.44L18.24 2.2C19.25 5.25 18.65 8.39 17.36 11.19C16.08 13.99 14.07 16.53 12.13 18.42L11.61 17.89L11.09 17.35C12.93 15.54 14.81 13.16 16 10.56C17.19 7.97 17.67 5.24 16.82 2.67L17.53 2.44ZM11.61 17.89L12.13 18.42C11.42 19.12 10.7 19.55 9.95 19.7C9.19 19.84 8.49 19.68 7.87 19.37C7.27 19.06 6.72 18.6 6.23 18.12C5.74 17.65 5.24 17.1 4.78 16.61L5.33 16.1L5.88 15.58C6.37 16.11 6.81 16.6 7.27 17.05C7.73 17.49 8.15 17.82 8.55 18.03C8.94 18.23 9.3 18.29 9.66 18.22C10.04 18.15 10.51 17.92 11.09 17.35L11.61 17.89ZM5.33 16.1L4.78 16.61C3.71 15.47 2.69 14.24 1.83 12.88L2.46 12.48L3.09 12.08C3.89 13.33 4.84 14.48 5.88 15.58L5.33 16.1Z" fill="#FE2E9D"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div id="work" class="page">
+  <div class="work-title">Selected <em>Work</em></div>
+  <div class="work-grid">
+    <div class="wcard" onclick="openCase('bigideas')">
+      <div class="wcard-img"><img src="images/board-case.jpg" alt="Big Ideas"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">Big Ideas</div><div class="title">Concept Thinking</div><div class="clients">EFES, Kotex, Liquid Death etc.</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('uxui')">
+      <div class="wcard-img"><img src="images/Ux-ui_design.png" alt="UX UI"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">UX/UI Design</div><div class="title">Digital Products</div><div class="clients">Kinder, IQOS, Kotex etc.</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('kv')">
+      <div class="wcard-img"><img src="images/Key_Visuals.png" alt="Key Visuals"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">Key Visuals</div><div class="title">Campaign Visuals</div><div class="clients">Lipton, IQOS, RedBull etc.</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('smm')">
+      <div class="wcard-img"><img src="images/SMM_design_.png" alt="SMM"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">SMM Design</div><div class="title">Social Media</div><div class="clients">Kotex, Kinder, Umschool</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('video')">
+      <div class="wcard-img"><img src="images/Video_cases.png" alt="Video"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">Video Cases</div><div class="title">Campaign Reels</div><div class="clients">Kotex, Huggies</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('photo')">
+      <div class="wcard-img"><img src="images/Photo_Video_shootings.png" alt="Photo"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">Photo & Video Shootings</div><div class="title">Production Direction</div><div class="clients">Kinder, Kotex</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('merch')">
+      <div class="wcard-img"><img src="images/Merch.png" alt="Merch"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">Merch</div><div class="title">Physical Goods</div><div class="clients">Nutella, IQOS, Lipton и др</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+    <div class="wcard" onclick="openCase('ai')">
+      <div class="wcard-img"><img src="images/Ai_using.png" alt="AI"></div>
+      <div class="wcard-info">
+        <div class="wcard-text"><div class="cat">AI Using</div><div class="title">AI-generated Work</div><div class="clients">GSM, IQOS, Kinder etc.</div></div>
+        <div class="wcard-arrow">↗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE -->
+<div id="case" class="page">
+  <div class="case-bg"></div>
+  <div class="case-controls" id="case-controls" style="display:none">
+    <button class="case-back" onclick="go('work')">← Back</button>
+    <div class="case-label" id="case-label">KEY VISUALS</div>
+  </div>
+  <div class="case-bg-text">
+    <span>don't forget</span>
+    <span>what are you</span>
+    <span>here for)</span>
+  </div>
+  <div id="windows-wrap"></div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="page">
+  <div class="about-wrap">
+    <div class="about-photo" id="about-photo">
+      <img src="images/IMG_7135.jpg" alt="Arisha" id="about-img">
+      <canvas class="about-canvas" id="about-canvas"></canvas>
+      <div class="about-hint">don't touch my face</div>
+    </div>
+    <div class="about-text">
+      <div class="about-eyebrow">About</div>
+      <h1 class="about-h1">Hey, I'm Arisha! Hiking in summer, skiing in winter — I'm a woman of many hobbies.</h1>
+      <div class="about-body">
+        <p>I moved from Russia to Kazakhstan at 19 when the war started. <strong>Best decision I ever made</strong>, even if the first year was a lot.</p>
+        <p><span class="pink">I joke in 3 languages and can stand on 1 head.</span> I've been to 25 countries and I'm always planning the next one. At 20 I went to <span class="pink">Cannes Lions as a competitor</span> — and in June 2026 I'm going back for my first gold&nbsp;;)</p>
+        <p>I do yoga every day, drink Chinese tea, and read Russian classics. I'm also studying philology at uni because apparently <strong>one passion is never enough.</strong></p>
+        <p>I believe in good teamwork, planning, and work-life balance that's actually balanced. I've never burned out — not because I work less, but because I rest properly.</p>
+        <p>Whether it's a big campaign, a weird idea, or just a coffee chat about design — I'm in.</p>
+      </div>
+      <button class="about-cta" onclick="go('contacts')">Let's connect ↓</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<div id="contacts" class="page">
+  <h1 class="contacts-h">Let's<br><span>connect.</span></h1>
+  <div class="c-list">
+    <a href="https://instagram.com" class="c-row" target="_blank">
+      <div class="c-left"><span class="c-label">here I'm beautiful</span><span class="c-val">Instagram</span></div>
+      <div class="c-circle">↗</div>
+    </a>
+    <a href="mailto:your@email.com" class="c-row">
+      <div class="c-left"><span class="c-label">here I work</span><span class="c-val">your@email.com</span></div>
+      <div class="c-circle">↗</div>
+    </a>
+    <a href="https://t.me/" class="c-row" target="_blank">
+      <div class="c-left"><span class="c-label">here I chat</span><span class="c-val">Telegram</span></div>
+      <div class="c-circle">↗</div>
+    </a>
+    <a href="#" class="c-row">
+      <div class="c-left"><span class="c-label">my CV for HR</span><span class="c-val">Download CV</span></div>
+      <div class="c-circle">↗</div>
+    </a>
+  </div>
+  <div class="contacts-footer"><span>Arisha Shakirova</span> — Art Director · Almaty · 2025</div>
+</div>
+
+<script>
+// CURSOR
+document.addEventListener('mousemove',e=>{
+  const c=document.getElementById('cur');
+  c.style.left=e.clientX+'px';
+  c.style.top=e.clientY+'px';
+});
+
+// NAV
+const navMap={home:0,work:1,about:2,contacts:3};
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===navMap[id]));
+  document.getElementById('main-nav').style.display='inline-flex';
+  document.getElementById('case-controls').style.display='none';
+  window.scrollTo(0,0);
+}
+
+// CASES
+const cases={
+  bigideas:{label:'BIG IDEAS',imgs:['images/Digital-KZ07-02_copy.jpg','images/board-case.jpg','images/telegram-cloud-photo-size-2-5391282369052398663-y.jpg','images/Print-KZ05-01.jpg','images/board-case.jpg','images/Digital-KZ07-02_copy.jpg']},
+  uxui:{label:'UX/UI DESIGN',imgs:['images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png','images/Ux-ui_design.png']},
+  kv:{label:'KEY VISUALS',imgs:['images/dequine2.jpg','images/lipton_02.jpg','images/kv_copy.png','images/kv_copy.png','images/dequine2.jpg','images/lipton_02.jpg','images/kv_copy.png','images/kv_copy.png']},
+  smm:{label:'SMM DESIGN',imgs:['images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png','images/SMM_design_.png']},
+  video:{label:'VIDEO CASES',imgs:['images/Video_cases.png','images/Video_cases.png']},
+  photo:{label:'PHOTO & VIDEO SHOOTINGS',imgs:['images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png','images/Photo_Video_shootings.png']},
+  merch:{label:'MERCH',imgs:['images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png','images/Merch.png']},
+  ai:{label:'AI USING',imgs:['images/Ai_using.png','images/Ai_using.png','images/Ai_using.png','images/Ai_using.png']}
+};
+
+let gz=20;
+function openCase(id){
+  const cfg=cases[id];
+  document.getElementById('case-label').textContent=cfg.label;
+  const wrap=document.getElementById('windows-wrap');
+  wrap.innerHTML='';
+  gz=20;
+  const W=window.innerWidth,H=window.innerHeight;
+  const names={
+    bigideas:['Young_Cannes_Lions_2025_BRONZE','Kotex_Blood_Sisters_2024','Young_Cannes_Lions_2023_SILVER','Young_Cannes_Lions_2026_GOLD','Liquid_Death_2024','EFES_concept_2025'],
+    uxui:['Kinder_HP_2024','IQOS_engraving_2025','Kotex_2025','Flash_Up_2025','Kinder_Surprise_2024','IQOS_page_2026'],
+    kv:['Dequine_2025','Lipton_2026','Eden_2025','RedBull_2025','IQOS_2026','Magnum_2024','Finish_2024','Domestos_2026'],
+    smm:['Kotex_feed_2025','Kinder_stories_2025','Umschool_posts_2025','Kotex_target_2025','Kinder_reels_2025','Umschool_target_2025'],
+    video:['Kotex_Blood_Sisters_2024','Kotex_Huggies_2026'],
+    photo:['Kinder_2025','Kotex_2024','Kinder_Bueno_2025','Kotex_shootings_2024','Kinder_family_2025','Kotex_studio_2024'],
+    merch:['Kotex_2024','Lipton_2025','Kinder_2024','IQOS_2026','Kotex_2023','Lipton_bag_2025'],
+    ai:['GSM_2026','IQOS_2026','Kinder_2025','Domestos_2026']
+  };
+  cfg.imgs.forEach((src,i)=>{
+    const win=document.createElement('div');
+    win.className='mac-win';
+    const w=180+Math.random()*140;
+    const x=40+Math.random()*(W-w-60);
+    const y=90+Math.random()*(H-280);
+    const r=(Math.random()-.5)*18;
+    win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
+    win.innerHTML=`<div class="mac-bar"><div class="mdot r"></div><div class="mdot y"></div><div class="mdot g"></div><span class="mname">${(names[id]||[])[i]||'work_0'+(i+1)}</span></div><img src="${src}" alt="" loading="lazy">`;
+    makeDrag(win);
+    wrap.appendChild(win);
+  });
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('case').classList.add('on');
+  document.getElementById('main-nav').style.display='none';
+  document.getElementById('case-controls').style.display='flex';
+  window.scrollTo(0,0);
+}
+
+function makeDrag(el){
+  let drag=false,sx,sy,ox,oy;
+  el.addEventListener('mousedown',e=>{
+    drag=true; sx=e.clientX; sy=e.clientY;
+    const r=el.getBoundingClientRect();
+    ox=r.left; oy=r.top;
+    gz++; el.style.zIndex=gz;
+    el.style.transform='rotate(0deg)';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove',e=>{
+    if(!drag)return;
+    el.style.left=(ox+e.clientX-sx)+'px';
+    el.style.top=(oy+e.clientY-sy)+'px';
+  });
+  document.addEventListener('mouseup',()=>drag=false);
+}
+
+// ABOUT face doodle
+const aphoto=document.getElementById('about-photo');
+const acanvas=document.getElementById('about-canvas');
+const actx=acanvas.getContext('2d');
+let dtimer=null,spin=false,rot=0;
+
+function resizeCv(){acanvas.width=aphoto.offsetWidth;acanvas.height=aphoto.offsetHeight}
+aphoto.addEventListener('mouseenter',()=>{
+  resizeCv(); actx.clearRect(0,0,acanvas.width,acanvas.height);
+  dtimer=setInterval(doodle,55); spin=true; doSpin();
+});
+aphoto.addEventListener('mouseleave',()=>{
+  clearInterval(dtimer); actx.clearRect(0,0,acanvas.width,acanvas.height);
+  spin=false; document.getElementById('about-img').style.transform='';
+});
+function doodle(){
+  actx.strokeStyle='#FE2E9D'; actx.lineWidth=1+Math.random()*2;
+  actx.lineCap='round'; actx.globalAlpha=.4+Math.random()*.5;
+  actx.beginPath();
+  const x=Math.random()*acanvas.width, y=acanvas.height*.1+Math.random()*acanvas.height*.75;
+  actx.moveTo(x,y);
+  for(let i=0;i<3;i++) actx.lineTo(x+(Math.random()-.5)*70,y+(Math.random()-.5)*70);
+  actx.stroke();
+  if(Math.random()>.65){actx.font='13px serif';actx.fillStyle='#FE2E9D';actx.globalAlpha=.7;actx.fillText('♥',Math.random()*acanvas.width,Math.random()*acanvas.height*.85);}
+}
+function doSpin(){
+  if(!spin)return;
+  rot+=1.5;
+  document.getElementById('about-img').style.transform=`rotate(${Math.sin(rot*.04)*7}deg) scale(${1+Math.sin(rot*.07)*.015})`;
+  requestAnimationFrame(doSpin);
+}
+</script>
+</body>
+</html>
