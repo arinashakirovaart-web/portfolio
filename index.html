@@ -43,7 +43,7 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 .hero-bio{font-size:23px;font-weight:400;line-height:26px;color:#fff}
 .hero-bio .pink{color:var(--pink)}
 .hero-bio p{margin-bottom:16px}
-.emoji-block{margin-top:40px}
+.emoji-block{margin-top:auto;padding-bottom:40px}
 .emoji-label{font-size:16px;color:#fff;line-height:1.8;text-transform:lowercase}
 .emoji-row{font-size:20px;margin-top:2px}
 .ticker-wrap{border-top:1px solid #1a1a1a;overflow:hidden;height:81px;display:flex;align-items:center;margin-top:auto;flex-shrink:0}
@@ -78,9 +78,11 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
   align-items:center;
   margin-bottom:14px;
 }
-.wcat{font-size:14px;font-weight:600;color:#fff;white-space:nowrap}
+.wcat{font-size:14px;font-weight:600;color:#fff;white-space:nowrap;transition:color .3s}
 .wcat.pink{color:var(--pink)}
-.wbrand{font-size:13px;font-weight:500;color:#3a3a3a;text-align:right}
+.wbrand{font-size:13px;font-weight:500;color:#3a3a3a;text-align:right;transition:color .3s}
+.wcard:hover .wcat{color:var(--pink)}
+.wcard:hover .wbrand{color:#fff}
 .wimg{
   width:100%;
   border-radius:14px;
@@ -106,18 +108,20 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 }
 
 /* ===== CASE ===== */
-#case{background:var(--pink);padding-top:70px}
+#case{background:var(--pink);padding-top:70px;cursor:none}
+#case #cur-black{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-55%);display:none}
 .case-bg-txt{
-  position:absolute;top:50%;left:50%;
+  position:fixed;top:50%;left:50%;
   transform:translate(-50%,-50%);
   text-align:center;pointer-events:none;
   user-select:none;z-index:0;
+  width:80%;
 }
 .case-bg-txt span{
   display:block;
-  font-size:clamp(40px,8vw,112px);
-  font-weight:400;color:rgba(254,46,157,0.4);
-  line-height:1.1;
+  font-size:clamp(24px,4vw,56px);
+  font-weight:400;color:rgba(255,255,255,0.15);
+  line-height:1.4;
 }
 .case-ctrl{
   position:fixed;top:20px;left:20px;
@@ -290,8 +294,9 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;back
 <!-- CASE -->
 <div id="case" class="page">
   <div class="case-bg-txt" id="case-bg-txt">
-    <span>don't forget</span><span>what are you</span><span>here for)</span>
+    <span>Want to know more about any project?</span><span>→ contact me</span>
   </div>
+  <svg id="cur-black" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-55%)" width="20" height="18" viewBox="0 0 20 18"><path d="M10 16.5C10 16.5 1 10.8 1 5.5C1 3.02 3.02 1 5.5 1C7.24 1 8.76 1.98 9.6 3.4C9.8 3.06 10.04 2.74 10.32 2.46C11.16 1.56 12.28 1 13.5 1C15.98 1 18 3.02 18 5.5C18 10.8 10 16.5 10 16.5Z" fill="#000"/></svg>
   <div class="case-ctrl" id="casectrl" style="display:none">
     <button class="case-back" onclick="go('work')">← Back</button>
   </div>
@@ -355,6 +360,8 @@ document.addEventListener('mousemove',e=>{
   const c=document.getElementById('cur');
   c.style.left=e.clientX+'px';
   c.style.top=e.clientY+'px';
+  const cb=document.getElementById('cur-black');
+  if(cb){cb.style.left=e.clientX+'px';cb.style.top=e.clientY+'px';}
 });
 
 // NAV
@@ -365,10 +372,18 @@ function go(id){
   document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===navMap[id]));
   document.getElementById('mainnav').style.display='inline-flex';
   document.getElementById('casectrl').style.display='none';
-  window.scrollTo(0,0);
-  // scroll page to top
+  document.getElementById('cur').style.display='block';
+  document.getElementById('cur-black').style.display='none';
+  window.location.hash=id;
   document.getElementById(id).scrollTop=0;
 }
+// Restore page from hash on load
+window.addEventListener('load',()=>{
+  const hash=window.location.hash.replace('#','');
+  if(hash&&document.getElementById(hash)){
+    if(['home','work','about','contacts'].includes(hash)) go(hash);
+  }
+});
 
 // CASES
 const caseData={
@@ -511,6 +526,9 @@ function openCase(id){
     document.getElementById('case').classList.add('on');
     document.getElementById('mainnav').style.display='inline-flex';
     document.getElementById('casectrl').style.display='flex';
+    document.getElementById('cur').style.display='none';
+    document.getElementById('cur-black').style.display='block';
+    window.location.hash='case_video';
     return;
   }
   const items=cfg.windows||cfg.imgs.map((src,i)=>({src,w:699,h:490,name:(names[id]||[])[i]||'work_0'+(i+1)}));
@@ -545,19 +563,32 @@ function openCase(id){
   document.getElementById('case').classList.add('on');
   document.getElementById('mainnav').style.display='inline-flex';
   document.getElementById('casectrl').style.display='flex';
+  document.getElementById('cur').style.display='none';
+  document.getElementById('cur-black').style.display='block';
+  window.location.hash='case_'+id;
+  // Move black cursor with mouse
+  document.getElementById('case').addEventListener('mousemove',function moveCur(e){
+    const c=document.getElementById('cur-black');
+    c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';
+  },{once:false});
 }
 
 function drag(el){
   let d=false,sx,sy,ox,oy;
   el.addEventListener('mousedown',e=>{
     d=true;sx=e.clientX;sy=e.clientY;
-    const r=el.getBoundingClientRect();
-    ox=r.left;oy=r.top;
+    // Use offsetLeft/offsetTop (absolute position) not getBoundingClientRect (viewport)
+    ox=parseInt(el.style.left)||0;
+    oy=parseInt(el.style.top)||0;
     gz++;el.style.zIndex=gz;
     el.style.transform='rotate(0deg)';
     e.preventDefault();
   });
-  document.addEventListener('mousemove',e=>{if(!d)return;el.style.left=(ox+e.clientX-sx)+'px';el.style.top=(oy+e.clientY-sy)+'px';});
+  document.addEventListener('mousemove',e=>{
+    if(!d)return;
+    el.style.left=(ox+e.clientX-sx)+'px';
+    el.style.top=(oy+e.clientY-sy)+'px';
+  });
   document.addEventListener('mouseup',()=>d=false);
 }
 
