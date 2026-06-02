@@ -536,7 +536,7 @@ const caseData={
   ]},
   merch:{label:'MERCH',windows:[
     {src:'Kotex_Period%20Underwear_2024.JPG',w:505,h:719,name:'Kotex_2024'},
-    {src:'Kotex_Bio%20Care_2024.JPG',w:348,h:435,name:'kinder_2024'},
+    {src:'Kotex_Bio%20Care_2024.JPG',w:348,h:435,name:'kotex_2024'},
     {src:'kotex_Merch%20for%20period_2023.jpg',w:348,h:435,name:'kotex_2023'},
     {src:'Lipton_4.jpg',w:500,h:719,name:'Lipton_2025'},
     {src:'Lipton_2.png',w:246,h:376,name:'Lipton_2025'},
@@ -593,21 +593,24 @@ function openCase(id){
   const caseEl=document.getElementById('case');
   caseEl.style.overflowY=isScrollable?'auto':'hidden';
   const n=items.length;
-  // Dense chaotic pile — like Figma reference
-  // All windows scattered in one big zone, heavily overlapping
-  // For many items, zone grows a bit vertically but stays compact
-  const pileW=W-80;
-  const pileH=n<=6?600:n<=12?900:1200;
-  const pileTop=90;
+  // Ultra dense chaotic pile — heavily overlapping like Figma reference
+  const pileW=W-100;
+  const pileH=n<=6?500:n<=12?700:900;
+  const pileTop=100;
+  // Center of pile
+  const cx=W/2;
+  const cy=pileTop+pileH/2;
   items.forEach((item,i)=>{
     const win=document.createElement('div');
     win.className='mw';
     const w=item.w;
     const h=item.h;
-    // Scatter randomly across the pile zone
-    const x=Math.max(20, Math.min(W-w-20, 20+Math.random()*Math.max(pileW-w,10)));
-    const y=pileTop+Math.random()*Math.max(pileH-h*0.5, 50);
-    const r=(Math.random()-.5)*20;
+    // Scatter around center with gaussian-like distribution
+    const spreadX=pileW*0.45;
+    const spreadY=pileH*0.4;
+    const x=Math.max(20,Math.min(W-w-20, cx-w/2+(Math.random()-0.5)*2*spreadX));
+    const y=Math.max(pileTop,Math.min(pileTop+pileH-h*0.3, cy-h/2+(Math.random()-0.5)*2*spreadY));
+    const r=(Math.random()-.5)*24;
     win.style.cssText=`width:${w}px;left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${20+i}`;
     win.innerHTML=`<div class="mbar"><div class="md r"></div><div class="md y"></div><div class="md g"></div><span class="mfn">${item.name}</span></div><div style="overflow:hidden;height:${h}px;"><img src="${item.src}" alt="" loading="lazy" style="width:${w}px;height:${h}px;object-fit:cover;display:block;pointer-events:none"></div>`;
     drag(win);
